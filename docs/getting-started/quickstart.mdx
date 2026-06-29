@@ -43,7 +43,10 @@ The easiest way to use Reactive Resume is through our cloud version at [rxresu.m
 
 </Steps>
 
-<Tip>Your resume updates in real-time as you type. The preview panel shows exactly how your final PDF will look.</Tip>
+<Tip>
+  Your resume updates in real-time as you type. The preview panel shows exactly how your final PDF
+  will look.
+</Tip>
 
 ---
 
@@ -52,7 +55,10 @@ The easiest way to use Reactive Resume is through our cloud version at [rxresu.m
 For users who prefer complete control over their data, you can deploy Reactive Resume on your own infrastructure using Docker.
 
 <Info>
-  **From v5.1.0 onwards** — PDF generation now runs entirely client-side via `@react-pdf/renderer`. Self-hosted deployments no longer require Browserless, Chromium, or any external print service as a dependency. The `PRINTER_*` and `BROWSERLESS_*` environment variables are no longer read and can be removed from your `.env`.
+  **From v5.1.0 onwards** — PDF generation now runs entirely client-side via `@react-pdf/renderer`.
+  Self-hosted deployments no longer require Browserless, Chromium, or any external print service as
+  a dependency. The `PRINTER_*` and `BROWSERLESS_*` environment variables are no longer read and can
+  be removed from your `.env`.
 </Info>
 
 ### Prerequisites
@@ -63,8 +69,9 @@ Before you begin, ensure you have the following installed:
 - [Docker Compose](https://docs.docker.com/compose/install/) (v2.0 or higher)
 
 <Info>
-  There is <strong>no difference in features</strong> between the cloud-hosted version and the self-hosted option. Both
-  provide the same privacy, customization, and functionality. Choose whichever deployment type suits your needs!
+  There is <strong>no difference in features</strong> between the cloud-hosted version and the
+  self-hosted option. Both provide the same privacy, customization, and functionality. Choose
+  whichever deployment type suits your needs!
 </Info>
 
 ### Quick Deployment
@@ -103,8 +110,8 @@ ENCRYPTION_SECRET=your-secure-encryption-secret-here
 ```
 
     	<Warning>
-		For production deployments, always use strong, unique values for `AUTH_SECRET`, `ENCRYPTION_SECRET`, and
-		database credentials.
+    	For production deployments, always use strong, unique values for `AUTH_SECRET`, `ENCRYPTION_SECRET`, and
+    	database credentials.
     	</Warning>
     </Step>
 
@@ -115,7 +122,7 @@ ENCRYPTION_SECRET=your-secure-encryption-secret-here
 
     	This starts:
     	- **PostgreSQL** — Database for storing user data and resumes
-	- **Redis** — Required for the AI Agent workspace
+    - **Redis** — Required for the AI Agent workspace
     	- **SeaweedFS** — S3-compatible storage for file uploads
     	- **Reactive Resume** — The main application
     </Step>
@@ -142,9 +149,10 @@ Here's what each service in the stack does:
 | `reactive_resume` | 3000 | The main Reactive Resume application                 |
 
 <Note>
-  Saved AI provider management requires `ENCRYPTION_SECRET`, and the AI Agent workspace requires both `REDIS_URL` and
-  `ENCRYPTION_SECRET`. Other Reactive Resume features can run without them. Agent attachments and other private objects
-  require S3-compatible storage; local storage rejects private objects.
+  Saved AI provider management requires `ENCRYPTION_SECRET`, and the AI Agent workspace requires
+  both `REDIS_URL` and `ENCRYPTION_SECRET`. Other Reactive Resume features can run without them.
+  Agent attachments and other private objects require S3-compatible storage; local storage rejects
+  private objects.
 </Note>
 
 ### Health Checks
@@ -173,43 +181,43 @@ Here's a complete list of environment variables you can configure:
 
 ### Optional Variables
 
-| Variable                              | Description                                                 | Default                |
-| ------------------------------------- | ----------------------------------------------------------- | ---------------------- |
-| `GOOGLE_CLIENT_ID`                    | Google OAuth Client ID                                      | —                      |
-| `GOOGLE_CLIENT_SECRET`                | Google OAuth Client Secret                                  | —                      |
-| `GITHUB_CLIENT_ID`                    | GitHub OAuth Client ID                                      | —                      |
-| `GITHUB_CLIENT_SECRET`                | GitHub OAuth Client Secret                                  | —                      |
-| `LINKEDIN_CLIENT_ID`                  | LinkedIn OAuth Client ID                                    | —                      |
-| `LINKEDIN_CLIENT_SECRET`              | LinkedIn OAuth Client Secret                                | —                      |
-| `OAUTH_PROVIDER_NAME`                 | Custom OAuth Provider Name                                  | —                      |
-| `OAUTH_CLIENT_ID`                     | Custom OAuth Client ID                                      | —                      |
-| `OAUTH_CLIENT_SECRET`                 | Custom OAuth Client Secret                                  | —                      |
-| `OAUTH_DISCOVERY_URL`                 | OIDC Discovery URL (use this OR manual URLs below)          | —                      |
-| `OAUTH_AUTHORIZATION_URL`             | OAuth Authorization URL (manual config)                     | —                      |
-| `OAUTH_TOKEN_URL`                     | OAuth Token URL (manual config)                             | —                      |
-| `OAUTH_USER_INFO_URL`                 | OAuth User Info URL (manual config)                         | —                      |
-| `OAUTH_SCOPES`                        | OAuth Scopes (space-separated)                              | `openid profile email` |
-| `BETTER_AUTH_API_KEY`                 | Better Auth dashboard API key                               | —                      |
-| `SMTP_HOST`                           | SMTP Server Host (for email features)                       | —                      |
-| `SMTP_PORT`                           | SMTP Server Port                                            | `587`                  |
-| `SMTP_USER`                           | SMTP Username                                               | —                      |
-| `SMTP_PASS`                           | SMTP Password                                               | —                      |
-| `SMTP_FROM`                           | Default FROM address for emails                             | —                      |
-| `SMTP_SECURE`                         | Use secure SMTP connection (`true` or `false`)              | `false`                |
-| `S3_ACCESS_KEY_ID`                    | S3 Access Key                                               | —                      |
-| `S3_SECRET_ACCESS_KEY`                | S3 Secret Key                                               | —                      |
-| `S3_REGION`                           | S3 Region                                                   | `us-east-1`            |
-| `S3_ENDPOINT`                         | S3-compatible Endpoint URL                                  | —                      |
-| `S3_BUCKET`                           | S3 Bucket Name                                              | —                      |
-| `S3_FORCE_PATH_STYLE`                 | Use path-style URLs for S3 (set `true` for MinIO/SeaweedFS) | `false`                |
-| `REDIS_URL`                           | Redis connection string for the AI Agent workspace          | —                      |
-| `ENCRYPTION_SECRET`                   | Encryption secret for saved AI provider credentials         | —                      |
-| `FLAG_DISABLE_SIGNUPS`                | Disables new user signups                                   | `false`                |
-| `FLAG_DISABLE_EMAIL_AUTH`             | Disables email/password login (SSO only)                    | `false`                |
-| `FLAG_DISABLE_IMAGE_PROCESSING`       | Disables image processing                                   | `false`                |
-| `FLAG_SHOW_SPONSORS`                  | Shows sponsor placements on the public landing page         | `false`                |
+| Variable                               | Description                                                 | Default                |
+| -------------------------------------- | ----------------------------------------------------------- | ---------------------- |
+| `GOOGLE_CLIENT_ID`                     | Google OAuth Client ID                                      | —                      |
+| `GOOGLE_CLIENT_SECRET`                 | Google OAuth Client Secret                                  | —                      |
+| `GITHUB_CLIENT_ID`                     | GitHub OAuth Client ID                                      | —                      |
+| `GITHUB_CLIENT_SECRET`                 | GitHub OAuth Client Secret                                  | —                      |
+| `LINKEDIN_CLIENT_ID`                   | LinkedIn OAuth Client ID                                    | —                      |
+| `LINKEDIN_CLIENT_SECRET`               | LinkedIn OAuth Client Secret                                | —                      |
+| `OAUTH_PROVIDER_NAME`                  | Custom OAuth Provider Name                                  | —                      |
+| `OAUTH_CLIENT_ID`                      | Custom OAuth Client ID                                      | —                      |
+| `OAUTH_CLIENT_SECRET`                  | Custom OAuth Client Secret                                  | —                      |
+| `OAUTH_DISCOVERY_URL`                  | OIDC Discovery URL (use this OR manual URLs below)          | —                      |
+| `OAUTH_AUTHORIZATION_URL`              | OAuth Authorization URL (manual config)                     | —                      |
+| `OAUTH_TOKEN_URL`                      | OAuth Token URL (manual config)                             | —                      |
+| `OAUTH_USER_INFO_URL`                  | OAuth User Info URL (manual config)                         | —                      |
+| `OAUTH_SCOPES`                         | OAuth Scopes (space-separated)                              | `openid profile email` |
+| `BETTER_AUTH_API_KEY`                  | Better Auth dashboard API key                               | —                      |
+| `SMTP_HOST`                            | SMTP Server Host (for email features)                       | —                      |
+| `SMTP_PORT`                            | SMTP Server Port                                            | `587`                  |
+| `SMTP_USER`                            | SMTP Username                                               | —                      |
+| `SMTP_PASS`                            | SMTP Password                                               | —                      |
+| `SMTP_FROM`                            | Default FROM address for emails                             | —                      |
+| `SMTP_SECURE`                          | Use secure SMTP connection (`true` or `false`)              | `false`                |
+| `S3_ACCESS_KEY_ID`                     | S3 Access Key                                               | —                      |
+| `S3_SECRET_ACCESS_KEY`                 | S3 Secret Key                                               | —                      |
+| `S3_REGION`                            | S3 Region                                                   | `us-east-1`            |
+| `S3_ENDPOINT`                          | S3-compatible Endpoint URL                                  | —                      |
+| `S3_BUCKET`                            | S3 Bucket Name                                              | —                      |
+| `S3_FORCE_PATH_STYLE`                  | Use path-style URLs for S3 (set `true` for MinIO/SeaweedFS) | `false`                |
+| `REDIS_URL`                            | Redis connection string for the AI Agent workspace          | —                      |
+| `ENCRYPTION_SECRET`                    | Encryption secret for saved AI provider credentials         | —                      |
+| `FLAG_DISABLE_SIGNUPS`                 | Disables new user signups                                   | `false`                |
+| `FLAG_DISABLE_EMAIL_AUTH`              | Disables email/password login (SSO only)                    | `false`                |
+| `FLAG_DISABLE_IMAGE_PROCESSING`        | Disables image processing                                   | `false`                |
+| `FLAG_SHOW_SPONSORS`                   | Shows sponsor placements on the public landing page         | `false`                |
 | `FLAG_ALLOW_UNSAFE_OAUTH_REDIRECT_URI` | Allows arbitrary dynamic OAuth redirect URIs                | `false`                |
-| `FLAG_ALLOW_UNSAFE_AI_BASE_URL`       | Allows unsafe/private/non-public AI provider base URLs      | `false`                |
+| `FLAG_ALLOW_UNSAFE_AI_BASE_URL`        | Allows unsafe/private/non-public AI provider base URLs      | `false`                |
 
 > **Note:** Some variables are only required for using related features (OAuth, SMTP, S3, etc.) and can be left unset if unused.
 
@@ -233,6 +241,7 @@ Here's a complete list of environment variables you can configure:
 </CardGroup>
 
 <Note>
-  **Having trouble?** Check our [GitHub Issues](https://github.com/amruthpillai/reactive-resume/issues) or reach out via
+  **Having trouble?** Check our [GitHub
+  Issues](https://github.com/amruthpillai/reactive-resume/issues) or reach out via
   [email](mailto:hello@amruthpillai.com).
 </Note>

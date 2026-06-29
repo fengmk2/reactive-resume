@@ -6,63 +6,63 @@ import { create } from "zustand/react";
 import { leftSidebarSections, rightSidebarSections } from "@/libs/resume/section";
 
 type SectionCollapseState = {
-	[id in SidebarSection]?: { collapsed: boolean };
+  [id in SidebarSection]?: { collapsed: boolean };
 };
 
 type SectionStoreState = {
-	sections: SectionCollapseState;
+  sections: SectionCollapseState;
 };
 
 type SectionStoreActions = {
-	setCollapsed: (id: SidebarSection, collapsed: boolean) => void;
-	toggleCollapsed: (id: SidebarSection) => void;
-	toggleAll: () => void;
+  setCollapsed: (id: SidebarSection, collapsed: boolean) => void;
+  toggleCollapsed: (id: SidebarSection) => void;
+  toggleAll: () => void;
 };
 
 type SectionStore = SectionStoreState & SectionStoreActions;
 
 const noopStorage: StateStorage = {
-	getItem: () => null,
-	removeItem: () => {},
-	setItem: () => {},
+  getItem: () => null,
+  removeItem: () => {},
+  setItem: () => {},
 };
 
 const getSectionStoreStorage = () => {
-	if (typeof window === "undefined") return noopStorage;
+  if (typeof window === "undefined") return noopStorage;
 
-	return window.localStorage ?? noopStorage;
+  return window.localStorage ?? noopStorage;
 };
 
 export const useSectionStore = create<SectionStore>()(
-	persist(
-		immer((set) => ({
-			sections: {},
-			setCollapsed: (id, collapsed) => {
-				set((state) => {
-					state.sections[id] = { collapsed };
-				});
-			},
-			toggleCollapsed: (id) => {
-				set((state) => {
-					const current = state.sections[id]?.collapsed ?? false;
-					state.sections[id] = { collapsed: !current };
-				});
-			},
-			toggleAll: () => {
-				set((state) => {
-					[...leftSidebarSections, ...rightSidebarSections].forEach((id) => {
-						const current = state.sections[id]?.collapsed ?? false;
-						state.sections[id] = { collapsed: !current };
-					});
-				});
-			},
-		})),
-		{
-			name: "section-store",
-			storage: createJSONStorage(getSectionStoreStorage),
-			partialize: (state) => ({
-				sections: state.sections,
-			}),
-		},
-	),
+  persist(
+    immer((set) => ({
+      sections: {},
+      setCollapsed: (id, collapsed) => {
+        set((state) => {
+          state.sections[id] = { collapsed };
+        });
+      },
+      toggleCollapsed: (id) => {
+        set((state) => {
+          const current = state.sections[id]?.collapsed ?? false;
+          state.sections[id] = { collapsed: !current };
+        });
+      },
+      toggleAll: () => {
+        set((state) => {
+          [...leftSidebarSections, ...rightSidebarSections].forEach((id) => {
+            const current = state.sections[id]?.collapsed ?? false;
+            state.sections[id] = { collapsed: !current };
+          });
+        });
+      },
+    })),
+    {
+      name: "section-store",
+      storage: createJSONStorage(getSectionStoreStorage),
+      partialize: (state) => ({
+        sections: state.sections,
+      }),
+    },
+  ),
 );

@@ -11,7 +11,7 @@ Always generate the minimal set of operations needed. Prefer "replace" for updat
 Use the special "-" index to append to arrays (e.g. "/sections/experience/items/-").`;
 
 export function executePatchResume(resumeData: ResumeData, operations: JsonPatchOperation[]) {
-	// Validates operations structurally and against the schema; throws on invalid
-	applyResumePatches(resumeData, operations);
-	return { success: true as const, appliedOperations: operations };
+  // Validates operations structurally and against the schema; throws on invalid
+  applyResumePatches(resumeData, operations);
+  return { success: true as const, appliedOperations: operations };
 }

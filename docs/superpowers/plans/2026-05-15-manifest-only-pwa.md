@@ -15,6 +15,7 @@ service-worker registration export plus the `vite-plugin-pwa` build plugin.
 ### Task 1: Remove service-worker wiring
 
 **Files:**
+
 - Modify: `apps/web/index.html`
 - Modify: `apps/web/vite.config.ts`
 - Modify: `apps/web/src/libs/pwa.ts`
@@ -57,6 +58,7 @@ Delete `apps/web/src/libs/pwa.test.ts`, because the remaining PWA surface is sta
 ### Task 2: Remove unused dependency graph
 
 **Files:**
+
 - Modify: `apps/web/package.json`
 - Modify: `pnpm-lock.yaml`
 
@@ -82,6 +84,7 @@ plugin. If the offline lockfile refresh is unavailable, edit the lockfile narrow
 ### Task 3: Validate manifest-only behavior
 
 **Files:**
+
 - Inspect: `apps/web/.output` or `apps/web/dist`
 
 - [x] **Step 1: Run focused checks**

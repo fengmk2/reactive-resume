@@ -7,46 +7,47 @@ import { createSectionTitleResolver } from "./section-title";
 const resolverCache = new Map<string, Promise<SectionTitleResolver>>();
 
 export const createSectionTitleResolverForLocale = async (localeParam: string) => {
-	const requestedLocale = resolveLocale(localeParam);
-	const cachedResolver = resolverCache.get(requestedLocale);
+  const requestedLocale = resolveLocale(localeParam);
+  const cachedResolver = resolverCache.get(requestedLocale);
 
-	if (cachedResolver) return cachedResolver;
+  if (cachedResolver) return cachedResolver;
 
-	const resolver = getLocaleMessages(requestedLocale).then(({ locale, messages }) => {
-		const i18n = setupI18n({ locale });
-		i18n.loadAndActivate({ locale, messages });
+  const resolver = getLocaleMessages(requestedLocale).then(({ locale, messages }) => {
+    const i18n = setupI18n({ locale });
+    i18n.loadAndActivate({ locale, messages });
 
-		return createSectionTitleResolver(i18n);
-	});
+    return createSectionTitleResolver(i18n);
+  });
 
-	resolverCache.set(requestedLocale, resolver);
+  resolverCache.set(requestedLocale, resolver);
 
-	return resolver;
+  return resolver;
 };
 
 export const useSectionTitleResolver = (locale?: string) => {
-	const [resolver, dispatchResolver] = useReducer(
-		(_state: SectionTitleResolver | null, nextResolver: SectionTitleResolver | null) => nextResolver,
-		null,
-	);
+  const [resolver, dispatchResolver] = useReducer(
+    (_state: SectionTitleResolver | null, nextResolver: SectionTitleResolver | null) =>
+      nextResolver,
+    null,
+  );
 
-	useEffect(() => {
-		if (!locale) {
-			dispatchResolver(null);
-			return;
-		}
+  useEffect(() => {
+    if (!locale) {
+      dispatchResolver(null);
+      return;
+    }
 
-		let cancelled = false;
+    let cancelled = false;
 
-		dispatchResolver(null);
-		void createSectionTitleResolverForLocale(locale).then((nextResolver) => {
-			if (!cancelled) dispatchResolver(nextResolver);
-		});
+    dispatchResolver(null);
+    void createSectionTitleResolverForLocale(locale).then((nextResolver) => {
+      if (!cancelled) dispatchResolver(nextResolver);
+    });
 
-		return () => {
-			cancelled = true;
-		};
-	}, [locale]);
+    return () => {
+      cancelled = true;
+    };
+  }, [locale]);
 
-	return resolver;
+  return resolver;
 };

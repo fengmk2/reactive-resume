@@ -9,59 +9,61 @@ import { env } from "@reactive-resume/env/server";
 import { getLocalDataDirectory } from "@reactive-resume/utils/monorepo.node";
 
 function resolveFromCurrentModule(relativePath: string) {
-	return fileURLToPath(new URL(relativePath, import.meta.url));
+  return fileURLToPath(new URL(relativePath, import.meta.url));
 }
 
 function resolveWorkspaceFolder(folderName: string): string {
-	let dir = resolveFromCurrentModule(".");
+  let dir = resolveFromCurrentModule(".");
 
-	while (dir !== path.dirname(dir)) {
-		const candidate = path.join(dir, folderName);
-		if (existsSync(candidate)) return candidate;
-		dir = path.dirname(dir);
-	}
+  while (dir !== path.dirname(dir)) {
+    const candidate = path.join(dir, folderName);
+    if (existsSync(candidate)) return candidate;
+    dir = path.dirname(dir);
+  }
 
-	throw new Error(`Could not locate ${folderName} folder relative to ${resolveFromCurrentModule(".")}`);
+  throw new Error(
+    `Could not locate ${folderName} folder relative to ${resolveFromCurrentModule(".")}`,
+  );
 }
 
 async function runDatabaseMigrations() {
-	console.info("Running database migrations...");
+  console.info("Running database migrations...");
 
-	const pool = new Pool({ connectionString: env.DATABASE_URL });
-	const db = drizzle({ client: pool });
+  const pool = new Pool({ connectionString: env.DATABASE_URL });
+  const db = drizzle({ client: pool });
 
-	try {
-		await migrate(db, { migrationsFolder: resolveWorkspaceFolder("migrations") });
-		console.info("Database migrations completed");
-	} catch (error) {
-		console.error("Database migrations failed", { error });
-		throw error;
-	} finally {
-		await pool.end();
-	}
+  try {
+    await migrate(db, { migrationsFolder: resolveWorkspaceFolder("migrations") });
+    console.info("Database migrations completed");
+  } catch (error) {
+    console.error("Database migrations failed", { error });
+    throw error;
+  } finally {
+    await pool.end();
+  }
 }
 
 async function validateLocalStoragePath() {
-	if (env.S3_ACCESS_KEY_ID && env.S3_SECRET_ACCESS_KEY && env.S3_BUCKET) return;
+  if (env.S3_ACCESS_KEY_ID && env.S3_SECRET_ACCESS_KEY && env.S3_BUCKET) return;
 
-	const dataDirectory = getLocalDataDirectory(env.LOCAL_STORAGE_PATH);
-	console.info(`Validating local storage path: ${dataDirectory}`);
+  const dataDirectory = getLocalDataDirectory(env.LOCAL_STORAGE_PATH);
+  console.info(`Validating local storage path: ${dataDirectory}`);
 
-	try {
-		await fs.mkdir(dataDirectory, { recursive: true });
-		await fs.access(dataDirectory, constants.R_OK | constants.W_OK);
-	} catch (error) {
-		const message = error instanceof Error ? error.message : "Unknown error";
-		console.error(
-			`Local storage path is not writable: ${dataDirectory}\n` +
-				`  ${message}\n` +
-				"Set LOCAL_STORAGE_PATH to a writable directory or fix permissions on the existing path.",
-		);
-		throw error;
-	}
+  try {
+    await fs.mkdir(dataDirectory, { recursive: true });
+    await fs.access(dataDirectory, constants.R_OK | constants.W_OK);
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "Unknown error";
+    console.error(
+      `Local storage path is not writable: ${dataDirectory}\n` +
+        `  ${message}\n` +
+        "Set LOCAL_STORAGE_PATH to a writable directory or fix permissions on the existing path.",
+    );
+    throw error;
+  }
 }
 
 export async function runStartupChecks() {
-	await runDatabaseMigrations();
-	await validateLocalStoragePath();
+  await runDatabaseMigrations();
+  await validateLocalStoragePath();
 }

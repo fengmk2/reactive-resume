@@ -3,7 +3,7 @@ packages:
   - packages/*
   - tooling
 patchedDependencies:
-  '@react-pdf/textkit@6.3.0': patches/@react-pdf__textkit@6.3.0.patch
+  "@react-pdf/textkit@6.3.0": patches/@react-pdf__textkit@6.3.0.patch
 minimumReleaseAge: 0
 allowBuilds:
   bcrypt: true
@@ -18,3 +18,27 @@ overrides:
   postcss@<8.5.10: ^8.5.14
   samlify@<2.13.0: ^2.13.0
   uuid@<11.1.1: ^11.1.1
+  vite: "catalog:"
+  vitest: "catalog:"
+catalog:
+  vite: npm:@voidzero-dev/vite-plus-core@0.0.0-commit.595280825cada6a3d3ee72e3314258340e320581
+  vitest: 4.1.9
+  vite-plus: 0.0.0-commit.595280825cada6a3d3ee72e3314258340e320581
+peerDependencyRules:
+  allowAny:
+    - vite
+    - vitest
+  allowedVersions:
+    vite: "*"
+    vitest: "*"
+minimumReleaseAgeExclude:
+  - vite-plus
+  - "@voidzero-dev/*"
+  - oxlint
+  - "@oxlint/*"
+  - oxlint-tsgolint
+  - "@oxlint-tsgolint/*"
+  - oxfmt
+  - "@oxfmt/*"
+  - vitest
+  - "@vitest/*"

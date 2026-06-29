@@ -7,13 +7,13 @@ Reactive Resume can create a new resume from several existing file formats. Use 
 
 ## Supported import formats
 
-| Format | Requires AI integration? | Notes |
-| --- | --- | --- |
-| **Reactive Resume (JSON)** | No | Best option for backups exported from the current version of Reactive Resume. |
-| **Reactive Resume v4 (JSON)** | No | Use this for files exported from Reactive Resume v4. |
-| **JSON Resume** | No | Use this for files that follow the JSON Resume schema. |
-| **PDF** | Yes | Reactive Resume asks your configured AI provider to parse the file into structured resume data. |
-| **Microsoft Word** | Yes | Supports Word documents. Reactive Resume asks your configured AI provider to parse the document. |
+| Format                        | Requires AI integration? | Notes                                                                                            |
+| ----------------------------- | ------------------------ | ------------------------------------------------------------------------------------------------ |
+| **Reactive Resume (JSON)**    | No                       | Best option for backups exported from the current version of Reactive Resume.                    |
+| **Reactive Resume v4 (JSON)** | No                       | Use this for files exported from Reactive Resume v4.                                             |
+| **JSON Resume**               | No                       | Use this for files that follow the JSON Resume schema.                                           |
+| **PDF**                       | Yes                      | Reactive Resume asks your configured AI provider to parse the file into structured resume data.  |
+| **Microsoft Word**            | Yes                      | Supports Word documents. Reactive Resume asks your configured AI provider to parse the document. |
 
 <Info>
   PDF and Word imports depend on your AI settings because those formats are not structured resume data. Configure AI in
@@ -36,15 +36,14 @@ Reactive Resume can create a new resume from several existing file formats. Use 
         alt="Import dialog showing supported resume import types"
       />
     </Frame>
+
   </Step>
 
-  <Step title="Choose the import type">
-    Pick the format that matches your file.
-  </Step>
+<Step title="Choose the import type">Pick the format that matches your file.</Step>
 
-  <Step title="Select the file">
-    Click the file selector and choose the resume file from your computer.
-  </Step>
+<Step title="Select the file">
+  Click the file selector and choose the resume file from your computer.
+</Step>
 
   <Step title="Import">
     Click **Import**. Reactive Resume creates a new resume and opens it in the builder when the import succeeds.
@@ -62,7 +61,8 @@ If your file is a standard JSON Resume document, choose **JSON Resume**.
 If you only have a PDF or Word document, choose **PDF** or **Microsoft Word**. After import, review every section carefully. AI parsing can save time, but it can also miss details, change wording, or place content in the wrong section.
 
 <Warning>
-  Always review an imported resume before sharing or exporting it. This is especially important for PDF and Word imports.
+  Always review an imported resume before sharing or exporting it. This is especially important for
+  PDF and Word imports.
 </Warning>
 
 ## Troubleshooting

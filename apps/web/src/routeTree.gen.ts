@@ -148,36 +148,31 @@ const BuilderResumeIdIndexRoute = BuilderResumeIdIndexRouteImport.update({
   path: "/",
   getParentRoute: () => BuilderResumeIdRouteRoute,
 } as any);
-const DashboardSettingsProfileRoute =
-  DashboardSettingsProfileRouteImport.update({
-    id: "/settings/profile",
-    path: "/settings/profile",
-    getParentRoute: () => DashboardRouteRoute,
-  } as any);
-const DashboardSettingsPreferencesRoute =
-  DashboardSettingsPreferencesRouteImport.update({
-    id: "/settings/preferences",
-    path: "/settings/preferences",
-    getParentRoute: () => DashboardRouteRoute,
-  } as any);
-const DashboardSettingsJobSearchRoute =
-  DashboardSettingsJobSearchRouteImport.update({
-    id: "/settings/job-search",
-    path: "/settings/job-search",
-    getParentRoute: () => DashboardRouteRoute,
-  } as any);
-const DashboardSettingsDangerZoneRoute =
-  DashboardSettingsDangerZoneRouteImport.update({
-    id: "/settings/danger-zone",
-    path: "/settings/danger-zone",
-    getParentRoute: () => DashboardRouteRoute,
-  } as any);
-const DashboardSettingsApiKeysRoute =
-  DashboardSettingsApiKeysRouteImport.update({
-    id: "/settings/api-keys",
-    path: "/settings/api-keys",
-    getParentRoute: () => DashboardRouteRoute,
-  } as any);
+const DashboardSettingsProfileRoute = DashboardSettingsProfileRouteImport.update({
+  id: "/settings/profile",
+  path: "/settings/profile",
+  getParentRoute: () => DashboardRouteRoute,
+} as any);
+const DashboardSettingsPreferencesRoute = DashboardSettingsPreferencesRouteImport.update({
+  id: "/settings/preferences",
+  path: "/settings/preferences",
+  getParentRoute: () => DashboardRouteRoute,
+} as any);
+const DashboardSettingsJobSearchRoute = DashboardSettingsJobSearchRouteImport.update({
+  id: "/settings/job-search",
+  path: "/settings/job-search",
+  getParentRoute: () => DashboardRouteRoute,
+} as any);
+const DashboardSettingsDangerZoneRoute = DashboardSettingsDangerZoneRouteImport.update({
+  id: "/settings/danger-zone",
+  path: "/settings/danger-zone",
+  getParentRoute: () => DashboardRouteRoute,
+} as any);
+const DashboardSettingsApiKeysRoute = DashboardSettingsApiKeysRouteImport.update({
+  id: "/settings/api-keys",
+  path: "/settings/api-keys",
+  getParentRoute: () => DashboardRouteRoute,
+} as any);
 const DashboardSettingsIntegrationsRouteRoute =
   DashboardSettingsIntegrationsRouteRouteImport.update({
     id: "/settings/integrations",
@@ -595,9 +590,7 @@ const HomeRouteRouteChildren: HomeRouteRouteChildren = {
   HomeIndexRoute: HomeIndexRoute,
 };
 
-const HomeRouteRouteWithChildren = HomeRouteRoute._addFileChildren(
-  HomeRouteRouteChildren,
-);
+const HomeRouteRouteWithChildren = HomeRouteRoute._addFileChildren(HomeRouteRouteChildren);
 
 interface AgentRouteRouteChildren {
   AgentThreadIdRoute: typeof AgentThreadIdRoute;
@@ -611,9 +604,7 @@ const AgentRouteRouteChildren: AgentRouteRouteChildren = {
   AgentIndexRoute: AgentIndexRoute,
 };
 
-const AgentRouteRouteWithChildren = AgentRouteRoute._addFileChildren(
-  AgentRouteRouteChildren,
-);
+const AgentRouteRouteWithChildren = AgentRouteRoute._addFileChildren(AgentRouteRouteChildren);
 
 interface AuthRouteRouteChildren {
   AuthForgotPasswordRoute: typeof AuthForgotPasswordRoute;
@@ -637,9 +628,7 @@ const AuthRouteRouteChildren: AuthRouteRouteChildren = {
   AuthIndexRoute: AuthIndexRoute,
 };
 
-const AuthRouteRouteWithChildren = AuthRouteRoute._addFileChildren(
-  AuthRouteRouteChildren,
-);
+const AuthRouteRouteWithChildren = AuthRouteRoute._addFileChildren(AuthRouteRouteChildren);
 
 interface DashboardRouteRouteChildren {
   DashboardIndexRoute: typeof DashboardIndexRoute;
@@ -655,16 +644,14 @@ interface DashboardRouteRouteChildren {
 
 const DashboardRouteRouteChildren: DashboardRouteRouteChildren = {
   DashboardIndexRoute: DashboardIndexRoute,
-  DashboardSettingsIntegrationsRouteRoute:
-    DashboardSettingsIntegrationsRouteRoute,
+  DashboardSettingsIntegrationsRouteRoute: DashboardSettingsIntegrationsRouteRoute,
   DashboardSettingsApiKeysRoute: DashboardSettingsApiKeysRoute,
   DashboardSettingsDangerZoneRoute: DashboardSettingsDangerZoneRoute,
   DashboardSettingsJobSearchRoute: DashboardSettingsJobSearchRoute,
   DashboardSettingsPreferencesRoute: DashboardSettingsPreferencesRoute,
   DashboardSettingsProfileRoute: DashboardSettingsProfileRoute,
   DashboardResumesIndexRoute: DashboardResumesIndexRoute,
-  DashboardSettingsAuthenticationIndexRoute:
-    DashboardSettingsAuthenticationIndexRoute,
+  DashboardSettingsAuthenticationIndexRoute: DashboardSettingsAuthenticationIndexRoute,
 };
 
 const DashboardRouteRouteWithChildren = DashboardRouteRoute._addFileChildren(
@@ -679,8 +666,9 @@ const BuilderResumeIdRouteRouteChildren: BuilderResumeIdRouteRouteChildren = {
   BuilderResumeIdIndexRoute: BuilderResumeIdIndexRoute,
 };
 
-const BuilderResumeIdRouteRouteWithChildren =
-  BuilderResumeIdRouteRoute._addFileChildren(BuilderResumeIdRouteRouteChildren);
+const BuilderResumeIdRouteRouteWithChildren = BuilderResumeIdRouteRoute._addFileChildren(
+  BuilderResumeIdRouteRouteChildren,
+);
 
 const rootRouteChildren: RootRouteChildren = {
   HomeRouteRoute: HomeRouteRouteWithChildren,

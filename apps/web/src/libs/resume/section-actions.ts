@@ -6,17 +6,17 @@ import type { WritableDraft } from "immer";
  * Handles both built-in sections and custom sections.
  */
 export function createSectionItem(
-	draft: WritableDraft<ResumeData>,
-	sectionKey: SectionType,
-	formData: Record<string, unknown>,
-	customSectionId?: string,
+  draft: WritableDraft<ResumeData>,
+  sectionKey: SectionType,
+  formData: Record<string, unknown>,
+  customSectionId?: string,
 ) {
-	if (customSectionId) {
-		const section = draft.customSections.find((s) => s.id === customSectionId);
-		if (section) section.items.push(formData as never);
-	} else {
-		(draft.sections[sectionKey].items as unknown[]).push(formData);
-	}
+  if (customSectionId) {
+    const section = draft.customSections.find((s) => s.id === customSectionId);
+    if (section) section.items.push(formData as never);
+  } else {
+    (draft.sections[sectionKey].items as unknown[]).push(formData);
+  }
 }
 
 /**
@@ -24,19 +24,19 @@ export function createSectionItem(
  * Handles both built-in sections and custom sections.
  */
 export function updateSectionItem(
-	draft: WritableDraft<ResumeData>,
-	sectionKey: SectionType,
-	formData: { id: string } & Record<string, unknown>,
-	customSectionId?: string,
+  draft: WritableDraft<ResumeData>,
+  sectionKey: SectionType,
+  formData: { id: string } & Record<string, unknown>,
+  customSectionId?: string,
 ) {
-	if (customSectionId) {
-		const section = draft.customSections.find((s) => s.id === customSectionId);
-		if (!section) return;
-		const index = section.items.findIndex((item) => item.id === formData.id);
-		if (index !== -1) section.items[index] = formData as never;
-	} else {
-		const items = draft.sections[sectionKey].items as Array<{ id: string }>;
-		const index = items.findIndex((item) => item.id === formData.id);
-		if (index !== -1) (items[index] as unknown as Record<string, unknown>) = formData;
-	}
+  if (customSectionId) {
+    const section = draft.customSections.find((s) => s.id === customSectionId);
+    if (!section) return;
+    const index = section.items.findIndex((item) => item.id === formData.id);
+    if (index !== -1) section.items[index] = formData as never;
+  } else {
+    const items = draft.sections[sectionKey].items as Array<{ id: string }>;
+    const index = items.findIndex((item) => item.id === formData.id);
+    if (index !== -1) (items[index] as unknown as Record<string, unknown>) = formData;
+  }
 }

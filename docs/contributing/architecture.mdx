@@ -41,27 +41,27 @@ flowchart TD
 
 ## Workspace Map
 
-| Workspace | Ownership |
-| --- | --- |
-| `apps/web` | TanStack Start routes, web features, browser PDF.js preview/viewer code, PWA setup, oRPC browser client |
-| `apps/server` | Hono route composition, production HTTP adapters, MCP transport, OpenAPI/well-known handlers, static file serving, startup checks |
-| `packages/api` | oRPC procedures and feature-owned business behavior under `src/features/*` |
-| `packages/auth` | Better Auth config, auth helpers, and exported auth types |
-| `packages/db` | Drizzle client and schema; root `migrations/` stores generated migrations |
-| `packages/env` | Server environment validation and root `.env` loading |
-| `packages/schema` | Zod schemas and typed resume/page/template models |
-| `packages/resume` | Pure resume-domain helpers, including JSON Patch behavior and network icon mapping |
-| `packages/pdf` | React PDF document, template primitives, templates, font registration, and browser/server generation adapters |
-| `packages/docx` | DOCX export generation |
-| `packages/mcp` | MCP tools, prompts, resources, server card, and tool metadata |
-| `packages/ui` | Shared Base UI/shadcn-style primitives and hooks |
-| `packages/ai` | AI provider types, prompts, resume parsing/sanitization helpers, and model-facing tool contracts |
-| `packages/import` | Resume importers |
-| `packages/fonts` | Font metadata |
-| `packages/email` | Email transport and templates |
-| `packages/utils` | Narrow cross-cutting utilities with explicit export subpaths |
-| `packages/config` | Shared development configuration |
-| `tooling` | Development-only scripts and repo tooling |
+| Workspace         | Ownership                                                                                                                         |
+| ----------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| `apps/web`        | TanStack Start routes, web features, browser PDF.js preview/viewer code, PWA setup, oRPC browser client                           |
+| `apps/server`     | Hono route composition, production HTTP adapters, MCP transport, OpenAPI/well-known handlers, static file serving, startup checks |
+| `packages/api`    | oRPC procedures and feature-owned business behavior under `src/features/*`                                                        |
+| `packages/auth`   | Better Auth config, auth helpers, and exported auth types                                                                         |
+| `packages/db`     | Drizzle client and schema; root `migrations/` stores generated migrations                                                         |
+| `packages/env`    | Server environment validation and root `.env` loading                                                                             |
+| `packages/schema` | Zod schemas and typed resume/page/template models                                                                                 |
+| `packages/resume` | Pure resume-domain helpers, including JSON Patch behavior and network icon mapping                                                |
+| `packages/pdf`    | React PDF document, template primitives, templates, font registration, and browser/server generation adapters                     |
+| `packages/docx`   | DOCX export generation                                                                                                            |
+| `packages/mcp`    | MCP tools, prompts, resources, server card, and tool metadata                                                                     |
+| `packages/ui`     | Shared Base UI/shadcn-style primitives and hooks                                                                                  |
+| `packages/ai`     | AI provider types, prompts, resume parsing/sanitization helpers, and model-facing tool contracts                                  |
+| `packages/import` | Resume importers                                                                                                                  |
+| `packages/fonts`  | Font metadata                                                                                                                     |
+| `packages/email`  | Email transport and templates                                                                                                     |
+| `packages/utils`  | Narrow cross-cutting utilities with explicit export subpaths                                                                      |
+| `packages/config` | Shared development configuration                                                                                                  |
+| `tooling`         | Development-only scripts and repo tooling                                                                                         |
 
 ---
 
@@ -87,18 +87,18 @@ pnpm exec biome check biome.json turbo.json tooling/grit/no-cross-workspace-src-
 
 When adding code, choose the owner by behavior:
 
-| Change | Put it here |
-| --- | --- |
-| Route, loader, route-level server handler, or web workflow | `apps/web/src/routes` plus `apps/web/src/features/<domain>` |
-| API procedure or authenticated business behavior | `packages/api/src/features/<domain>` |
-| Pure resume data logic | `packages/resume` |
-| Resume schema or template list shape | `packages/schema` |
-| React PDF template/rendering behavior | `packages/pdf` |
-| PDF.js canvas/viewer UI | `apps/web/src/features/resume` |
-| DOCX export behavior | `packages/docx` |
-| MCP tool/prompt/resource behavior | `packages/mcp` |
-| Shared UI primitive/hook | `packages/ui` |
-| Cross-cutting helper | Prefer a domain package first; otherwise add an explicit `packages/utils` export |
+| Change                                                     | Put it here                                                                      |
+| ---------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| Route, loader, route-level server handler, or web workflow | `apps/web/src/routes` plus `apps/web/src/features/<domain>`                      |
+| API procedure or authenticated business behavior           | `packages/api/src/features/<domain>`                                             |
+| Pure resume data logic                                     | `packages/resume`                                                                |
+| Resume schema or template list shape                       | `packages/schema`                                                                |
+| React PDF template/rendering behavior                      | `packages/pdf`                                                                   |
+| PDF.js canvas/viewer UI                                    | `apps/web/src/features/resume`                                                   |
+| DOCX export behavior                                       | `packages/docx`                                                                  |
+| MCP tool/prompt/resource behavior                          | `packages/mcp`                                                                   |
+| Shared UI primitive/hook                                   | `packages/ui`                                                                    |
+| Cross-cutting helper                                       | Prefer a domain package first; otherwise add an explicit `packages/utils` export |
 
 ---
 

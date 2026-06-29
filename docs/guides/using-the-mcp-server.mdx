@@ -233,16 +233,16 @@ Older clients may refer to prefixed or dot-separated names. Those names are no l
 
 Resources follow MCP conventions: **static** items appear in `resources/list`; **parameterized** access is declared in `resources/templates/list` and read via `resources/read` once you know the ID.
 
-| Discovery                             | What you get                                                                                  |
-| ------------------------------------- | --------------------------------------------------------------------------------------------- |
-| `resources/list`                      | Static resources only — currently **`resume://_meta/schema`** (ResumeData JSON Schema)        |
+| Discovery                  | What you get                                                                                  |
+| -------------------------- | --------------------------------------------------------------------------------------------- |
+| `resources/list`           | Static resources only — currently **`resume://_meta/schema`** (ResumeData JSON Schema)        |
 | `resources/templates/list` | **`resume://{id}`** — template for reading full resume JSON by ID (not enumerated per resume) |
 | `list_resumes` (tool)      | **Primary way to discover resume IDs** — resumes are not listed as separate MCP resources     |
 
-| URI                     | Description                                                              |
-| ----------------------- | ------------------------------------------------------------------------ |
-| `resume://_meta/schema` | ResumeData JSON Schema — use for valid JSON Patch paths and value types  |
-| `resume://{id}`         | Full resume data as JSON — use an ID from `list_resumes`                 |
+| URI                     | Description                                                             |
+| ----------------------- | ----------------------------------------------------------------------- |
+| `resume://_meta/schema` | ResumeData JSON Schema — use for valid JSON Patch paths and value types |
+| `resume://{id}`         | Full resume data as JSON — use an ID from `list_resumes`                |
 
 ### Breaking change (schema URI)
 
@@ -304,9 +304,9 @@ Once your MCP client is connected, you can use natural language to interact with
 - "Improve the wording on my resume" (uses `improve_resume`)
 
 <Tip>
-  The AI will use `read_resume` to inspect your current resume before making changes with `apply_resume_patch`. This
-  ensures the correct JSON paths are used. Use `update_resume` for name, slug, tags, and public visibility (not for
-  section content).
+  The AI will use `read_resume` to inspect your current resume before making changes with
+  `apply_resume_patch`. This ensures the correct JSON paths are used. Use `update_resume` for name,
+  slug, tags, and public visibility (not for section content).
 </Tip>
 
 ## Troubleshooting
@@ -316,7 +316,7 @@ Once your MCP client is connected, you can use natural language to interact with
 | "Unauthorized" with no login prompt                           | Your client may not support MCP OAuth discovery. Use API key mode (`x-api-key`)                                                |
 | OAuth login opens but fails redirect/callback                 | Confirm your client's MCP OAuth callback settings and retry the connection                                                     |
 | "API error (401)"                                             | Your API key is invalid or expired. Create a new one in **Settings → API Keys**                                                |
-| "API error (404)"                                             | The resume ID doesn't exist. Use `list_resumes` to find valid IDs                                                             |
+| "API error (404)"                                             | The resume ID doesn't exist. Use `list_resumes` to find valid IDs                                                              |
 | "API error (403)"                                             | The resume is locked. Unlock it in the Reactive Resume dashboard                                                               |
 | Connection refused                                            | Check that the URL is correct and the instance is running                                                                      |
 | "ReferenceError: File is not defined" when using `mcp-remote` | You're running Node.js 18. `mcp-remote` requires **Node.js 20 or later** — upgrade with `nvm use 20` or `nvm alias default 20` |

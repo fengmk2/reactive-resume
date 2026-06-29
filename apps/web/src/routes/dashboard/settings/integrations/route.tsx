@@ -6,17 +6,17 @@ import { IntegrationsSettingsPage } from "@/features/settings/integrations";
 import { DashboardHeader } from "../../-components/header";
 
 export const Route = createFileRoute("/dashboard/settings/integrations")({
-	component: RouteComponent,
+  component: RouteComponent,
 });
 
 function RouteComponent() {
-	return (
-		<div className="space-y-4">
-			<DashboardHeader icon={BrainIcon} title={t`Integrations`} />
+  return (
+    <div className="space-y-4">
+      <DashboardHeader icon={BrainIcon} title={t`Integrations`} />
 
-			<Separator />
+      <Separator />
 
-			<IntegrationsSettingsPage />
-		</div>
-	);
+      <IntegrationsSettingsPage />
+    </div>
+  );
 }

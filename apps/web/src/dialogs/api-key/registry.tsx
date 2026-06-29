@@ -2,5 +2,5 @@ import { defineDialogRenderer, defineDialogRendererRegistry } from "../renderer-
 import { CreateApiKeyDialog } from "./create";
 
 export const apiKeyDialogRendererRegistry = defineDialogRendererRegistry("api-key", [
-	defineDialogRenderer("api-key.create", () => <CreateApiKeyDialog />),
+  defineDialogRenderer("api-key.create", () => <CreateApiKeyDialog />),
 ]);

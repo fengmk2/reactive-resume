@@ -3,18 +3,18 @@ import { resumeDataSchema } from "@reactive-resume/schema/resume/data";
 import { appVersion } from "../app-version";
 
 export function handleSchemaJson() {
-	const resumeDataJSONSchema = z.toJSONSchema(resumeDataSchema);
+  const resumeDataJSONSchema = z.toJSONSchema(resumeDataSchema);
 
-	return Response.json(resumeDataJSONSchema, {
-		status: 200,
-		headers: {
-			"Content-Type": "application/schema+json; charset=utf-8",
-			"Cache-Control": "public, max-age=86400, immutable",
-			"Surrogate-Control": "max-age=86400",
-			"X-Content-Type-Options": "nosniff",
-			"X-Robots-Tag": "index, follow",
-			ETag: appVersion,
-			Vary: "Accept",
-		},
-	});
+  return Response.json(resumeDataJSONSchema, {
+    status: 200,
+    headers: {
+      "Content-Type": "application/schema+json; charset=utf-8",
+      "Cache-Control": "public, max-age=86400, immutable",
+      "Surrogate-Control": "max-age=86400",
+      "X-Content-Type-Options": "nosniff",
+      "X-Robots-Tag": "index, follow",
+      ETag: appVersion,
+      Vary: "Accept",
+    },
+  });
 }

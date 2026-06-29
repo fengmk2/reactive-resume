@@ -4,12 +4,16 @@ import { authDialogSchemas } from "./auth/schema";
 import { resumeDialogSchemas } from "./resume/schema";
 
 export const dialogSchemaRegistries = [
-	{ domain: "auth", schemas: authDialogSchemas },
-	{ domain: "api-key", schemas: apiKeyDialogSchemas },
-	{ domain: "resume", schemas: resumeDialogSchemas },
+  { domain: "auth", schemas: authDialogSchemas },
+  { domain: "api-key", schemas: apiKeyDialogSchemas },
+  { domain: "resume", schemas: resumeDialogSchemas },
 ] as const;
 
-const dialogSchemaEntries = [...authDialogSchemas, ...apiKeyDialogSchemas, ...resumeDialogSchemas] as const;
+const dialogSchemaEntries = [
+  ...authDialogSchemas,
+  ...apiKeyDialogSchemas,
+  ...resumeDialogSchemas,
+] as const;
 
 export const dialogTypeSchema = z.discriminatedUnion("type", dialogSchemaEntries);
 
@@ -19,6 +23,6 @@ export type DialogType = DialogSchema["type"];
 export type DialogData<T extends DialogType> = Extract<DialogSchema, { type: T }>["data"];
 
 type DialogPropsData<T extends DialogType> =
-	DialogData<T> extends undefined ? Record<string, never> : { data: DialogData<T> };
+  DialogData<T> extends undefined ? Record<string, never> : { data: DialogData<T> };
 
 export type DialogProps<T extends DialogType> = DialogPropsData<T>;

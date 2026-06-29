@@ -5,26 +5,26 @@ import { env } from "@reactive-resume/env/server";
 import { relations } from "./relations";
 
 declare global {
-	var __pool: Pool | undefined;
-	var __drizzle: NodePgDatabase<typeof relations> | undefined;
+  var __pool: Pool | undefined;
+  var __drizzle: NodePgDatabase<typeof relations> | undefined;
 }
 
 export function getPool() {
-	if (!globalThis.__pool) {
-		globalThis.__pool = new Pool({ connectionString: env.DATABASE_URL });
-	}
-	return globalThis.__pool;
+  if (!globalThis.__pool) {
+    globalThis.__pool = new Pool({ connectionString: env.DATABASE_URL });
+  }
+  return globalThis.__pool;
 }
 
 function makeDrizzleClient() {
-	return drizzle({ client: getPool(), relations });
+  return drizzle({ client: getPool(), relations });
 }
 
 export function createDatabase() {
-	if (!globalThis.__drizzle) {
-		globalThis.__drizzle = makeDrizzleClient();
-	}
-	return globalThis.__drizzle;
+  if (!globalThis.__drizzle) {
+    globalThis.__drizzle = makeDrizzleClient();
+  }
+  return globalThis.__drizzle;
 }
 
 export const db = createDatabase();

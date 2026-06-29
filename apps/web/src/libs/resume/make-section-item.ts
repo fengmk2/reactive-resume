@@ -11,6 +11,6 @@ import { generateId } from "@reactive-resume/utils/string";
  * (duplicate) or no item (create) to keep the seam explicit and predictable.
  */
 export function makeSectionItem<T extends { id: string }>(defaultItem: T, item?: T): T {
-	if (item) return { ...item, id: generateId() };
-	return { ...defaultItem, id: generateId() };
+  if (item) return { ...item, id: generateId() };
+  return { ...defaultItem, id: generateId() };
 }

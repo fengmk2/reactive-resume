@@ -1,4 +1,4 @@
 {
-	"extends": ["//"],
-	"tags": ["role:rendering"]
+  "extends": ["//"],
+  "tags": ["role:rendering"]
 }

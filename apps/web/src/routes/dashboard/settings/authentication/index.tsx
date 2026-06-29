@@ -6,17 +6,17 @@ import { AuthenticationSettingsPage } from "@/features/settings/authentication";
 import { DashboardHeader } from "../../-components/header";
 
 export const Route = createFileRoute("/dashboard/settings/authentication/")({
-	component: RouteComponent,
+  component: RouteComponent,
 });
 
 function RouteComponent() {
-	return (
-		<div className="space-y-4">
-			<DashboardHeader icon={ShieldCheckIcon} title={t`Authentication`} />
+  return (
+    <div className="space-y-4">
+      <DashboardHeader icon={ShieldCheckIcon} title={t`Authentication`} />
 
-			<Separator />
+      <Separator />
 
-			<AuthenticationSettingsPage />
-		</div>
-	);
+      <AuthenticationSettingsPage />
+    </div>
+  );
 }

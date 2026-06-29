@@ -4,8 +4,9 @@ description: "Set up a local development environment for Reactive Resume"
 ---
 
 <Info>
-  **Prerequisites**: - [Node.js](https://nodejs.org/) v24 - [pnpm](https://pnpm.io/) v11.1.2 through Corepack -
-  [Docker](https://docs.docker.com/get-docker/) and Docker Compose - [Git](https://git-scm.com/)
+  **Prerequisites**: - [Node.js](https://nodejs.org/) v24 - [pnpm](https://pnpm.io/) v11.1.2 through
+  Corepack - [Docker](https://docs.docker.com/get-docker/) and Docker Compose -
+  [Git](https://git-scm.com/)
 </Info>
 
 This guide walks you through setting up Reactive Resume for local development. Whether you're contributing to the project or customizing it for your needs, these steps will get you up and running.
@@ -49,15 +50,16 @@ This guide walks you through setting up Reactive Resume for local development. W
     <Info>
       **From v5.1.0 onwards** — PDF generation now runs entirely in the browser via `@react-pdf/renderer`, so no Browserless or Chromium container is required for development.
     </Info>
-    
+
     <Tip>
       `compose.dev.yml` can also run the app in a development container with `docker compose -f compose.dev.yml up -d`.
       Use the service-filtered command above when you want local editor tooling and `pnpm dev` on the host.
     </Tip>
-    
+
     <Tip>
       Wait for all services to be healthy before proceeding. Check with `docker compose -f compose.dev.yml ps`.
     </Tip>
+
   </Step>
   
   <Step title="Configure Environment Variables">
@@ -124,16 +126,16 @@ Here are the most commonly used scripts during development:
 
 ### Development
 
-| Command                        | Description                                                 |
-| ------------------------------ | ----------------------------------------------------------- |
-| `pnpm dev`                     | Start the web and server development processes              |
-| `pnpm build`                   | Build the production web bundle and server bundle           |
-| `pnpm start`                   | Start the built production server                           |
-| `pnpm typecheck`               | Run TypeScript type checking                                |
-| `pnpm test`                    | Run Vitest across workspaces                                |
-| `pnpm exec biome check .`      | Run a non-mutating Biome check                              |
-| `pnpm check`                   | Run Biome with write/fix behavior (`--write --unsafe`)      |
-| `pnpm exec turbo boundaries`   | Check workspace/package boundary rules                      |
+| Command                      | Description                                            |
+| ---------------------------- | ------------------------------------------------------ |
+| `pnpm dev`                   | Start the web and server development processes         |
+| `pnpm build`                 | Build the production web bundle and server bundle      |
+| `pnpm start`                 | Start the built production server                      |
+| `pnpm typecheck`             | Run TypeScript type checking                           |
+| `pnpm test`                  | Run Vitest across workspaces                           |
+| `pnpm exec biome check .`    | Run a non-mutating Biome check                         |
+| `pnpm check`                 | Run Biome with write/fix behavior (`--write --unsafe`) |
+| `pnpm exec turbo boundaries` | Check workspace/package boundary rules                 |
 
 ### Database
 
@@ -201,7 +203,10 @@ This opens a web-based GUI at [https://local.drizzle.studio](https://local.drizz
    pnpm run db:migrate
    ```
 
-<Warning>Always review generated migrations before applying them, especially when working with existing data.</Warning>
+<Warning>
+  Always review generated migrations before applying them, especially when working with existing
+  data.
+</Warning>
 
 ---
 
@@ -259,8 +264,8 @@ pnpm run typecheck
 ```
 
 <Tip>
-  Configure your IDE to use Biome for formatting and lint diagnostics. The repo uses tabs, double quotes, 120-column
-  lines, and organized import groups.
+  Configure your IDE to use Biome for formatting and lint diagnostics. The repo uses tabs, double
+  quotes, 120-column lines, and organized import groups.
 </Tip>
 
 ---
@@ -299,7 +304,11 @@ pnpm run typecheck
   <Card title="Project Architecture" icon="folder-open" href="/contributing/architecture">
     Deep dive into the project architecture and codebase structure.
   </Card>
-  <Card title="GitHub Repository" icon="github" href="https://github.com/amruthpillai/reactive-resume">
+  <Card
+    title="GitHub Repository"
+    icon="github"
+    href="https://github.com/amruthpillai/reactive-resume"
+  >
     View the source code and contribute to the project.
   </Card>
 </CardGroup>

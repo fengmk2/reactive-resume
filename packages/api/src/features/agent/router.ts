@@ -4,8 +4,8 @@ import { messagesRouter } from "./messages";
 import { threadsRouter } from "./threads";
 
 export const agentRouter = {
-	threads: threadsRouter,
-	messages: messagesRouter,
-	attachments: attachmentsRouter,
-	actions: actionsRouter,
+  threads: threadsRouter,
+  messages: messagesRouter,
+  attachments: attachmentsRouter,
+  actions: actionsRouter,
 };

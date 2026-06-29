@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 
 const readPrompt = (filename: string) => {
-	return readFileSync(new URL(`./prompts/${filename}`, import.meta.url), "utf-8");
+  return readFileSync(new URL(`./prompts/${filename}`, import.meta.url), "utf-8");
 };
 
 const analyzeResumeSystemPrompt = readPrompt("analyze-resume-system.md");
@@ -12,10 +12,10 @@ const pdfParserSystemPrompt = readPrompt("pdf-parser-system.md");
 const pdfParserUserPrompt = readPrompt("pdf-parser-user.md");
 
 export {
-	analyzeResumeSystemPrompt,
-	chatSystemPromptTemplate,
-	docxParserSystemPrompt,
-	docxParserUserPrompt,
-	pdfParserSystemPrompt,
-	pdfParserUserPrompt,
+  analyzeResumeSystemPrompt,
+  chatSystemPromptTemplate,
+  docxParserSystemPrompt,
+  docxParserUserPrompt,
+  pdfParserSystemPrompt,
+  pdfParserUserPrompt,
 };

@@ -209,6 +209,7 @@ Standard sidebar navigation layout using the `Sidebar` component system. The sid
 ### Landing Page
 
 Full-width single-column marketing layout:
+
 1. **Floating builder preview** — A non-interactive screenshot of the builder as a hero visual, creating an immediate "this is what you get" impression.
 2. **Hero** — Centered headline, subheadline, and two CTAs (primary "Get Started" with arrow, ghost "Learn More" with icon).
 3. **Features grid** — 4-column responsive grid with icon + title + description cards, separated by thin border lines.
@@ -231,6 +232,7 @@ Animations use the Motion library (formerly Framer Motion) and follow a consiste
 **Entrance animations** use a fade-up reveal: elements start at `opacity: 0, y: 20-100` and animate to `opacity: 1, y: 0`. The hero section uses a larger y-offset (100px) for dramatic effect; subsequent sections use 20px for subtlety.
 
 **Timing principles:**
+
 - **Base duration:** 0.35s–0.6s for standard section reveals, 0.45s for hero elements, up to 1.1s for the hero video entrance.
 - **Stagger pattern:** Sequential delays within a group, typically 0.1s–0.15s apart (hero: 0.55s, 0.7s, 0.82s, 0.95s). For grids, use `index * 0.03`–`0.1` for per-item stagger.
 - **Easing:** `easeOut` for entrances (elements decelerate into position). `easeInOut` for looping/ambient animations.
@@ -257,15 +259,15 @@ The resume preview page uses a subtle drop shadow to simulate a physical sheet o
 
 Border radius follows a multiplicative scale from a single `--radius` base of `0.3rem`:
 
-| Token | Value | Usage |
-|:------|:------|:------|
-| `sm` | 0.18rem (≈3px) | Small badges, inline chips |
-| `md` | 0.24rem (≈4px) | XS/SM buttons, compact elements |
-| `lg` | 0.3rem (≈5px) | Default buttons, cards, inputs |
-| `xl` | 0.42rem (≈7px) | Larger cards, modal corners |
-| `2xl` | 0.54rem (≈9px) | Dialog containers |
-| `3xl` | 0.66rem (≈11px) | Large panels |
-| `4xl` | 0.78rem (≈12px) | Full-page modals |
+| Token | Value           | Usage                           |
+| :---- | :-------------- | :------------------------------ |
+| `sm`  | 0.18rem (≈3px)  | Small badges, inline chips      |
+| `md`  | 0.24rem (≈4px)  | XS/SM buttons, compact elements |
+| `lg`  | 0.3rem (≈5px)   | Default buttons, cards, inputs  |
+| `xl`  | 0.42rem (≈7px)  | Larger cards, modal corners     |
+| `2xl` | 0.54rem (≈9px)  | Dialog containers               |
+| `3xl` | 0.66rem (≈11px) | Large panels                    |
+| `4xl` | 0.78rem (≈12px) | Full-page modals                |
 
 The radius scale is deliberately tight — the largest value (0.78rem) is still quite subtle. This avoids the "rounded everything" aesthetic and keeps the UI feeling precise and tool-like. Interactive elements consistently use `rounded-lg` as the default.
 

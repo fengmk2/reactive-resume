@@ -13,6 +13,7 @@
 ### Task 1: Add Workflow Triggers and Mode Outputs
 
 **Files:**
+
 - Modify: `.github/workflows/docker-build.yml`
 
 - [x] **Step 1: Update workflow triggers**
@@ -30,6 +31,7 @@ on:
 ```
 
 Expected behavior:
+
 - `push` to `main` runs the workflow.
 - `push` to tags matching `v*` runs the workflow.
 - PR events do not run the workflow.
@@ -40,25 +42,25 @@ Expected behavior:
 Add a `mode` job before `build`:
 
 ```yaml
-  mode:
-    runs-on: ubuntu-latest
-    outputs:
-      nightly: ${{ steps.mode.outputs.nightly }}
-      release: ${{ steps.mode.outputs.release }}
-      matrix: ${{ steps.mode.outputs.matrix }}
-    steps:
-      - name: Determine publishing mode
-        id: mode
-        run: |
-          if [[ "${{ github.event_name }}" == "push" && "${{ github.ref }}" == "refs/heads/main" ]]; then
-            echo "nightly=true" >> "$GITHUB_OUTPUT"
-            echo "release=false" >> "$GITHUB_OUTPUT"
-            echo 'matrix={"include":[{"platform":"linux/amd64","runner":"ubuntu-latest","arch":"amd64"}]}' >> "$GITHUB_OUTPUT"
-          else
-            echo "nightly=false" >> "$GITHUB_OUTPUT"
-            echo "release=true" >> "$GITHUB_OUTPUT"
-            echo 'matrix={"include":[{"platform":"linux/amd64","runner":"ubuntu-latest","arch":"amd64"},{"platform":"linux/arm64","runner":"ubuntu-24.04-arm","arch":"arm64"}]}' >> "$GITHUB_OUTPUT"
-          fi
+mode:
+  runs-on: ubuntu-latest
+  outputs:
+    nightly: ${{ steps.mode.outputs.nightly }}
+    release: ${{ steps.mode.outputs.release }}
+    matrix: ${{ steps.mode.outputs.matrix }}
+  steps:
+    - name: Determine publishing mode
+      id: mode
+      run: |
+        if [[ "${{ github.event_name }}" == "push" && "${{ github.ref }}" == "refs/heads/main" ]]; then
+          echo "nightly=true" >> "$GITHUB_OUTPUT"
+          echo "release=false" >> "$GITHUB_OUTPUT"
+          echo 'matrix={"include":[{"platform":"linux/amd64","runner":"ubuntu-latest","arch":"amd64"}]}' >> "$GITHUB_OUTPUT"
+        else
+          echo "nightly=false" >> "$GITHUB_OUTPUT"
+          echo "release=true" >> "$GITHUB_OUTPUT"
+          echo 'matrix={"include":[{"platform":"linux/amd64","runner":"ubuntu-latest","arch":"amd64"},{"platform":"linux/arm64","runner":"ubuntu-24.04-arm","arch":"arm64"}]}' >> "$GITHUB_OUTPUT"
+        fi
 ```
 
 This job centralizes the event decision so later jobs do not duplicate the full expression.
@@ -66,6 +68,7 @@ This job centralizes the event decision so later jobs do not duplicate the full 
 ### Task 2: Generate the Platform Matrix from Mode
 
 **Files:**
+
 - Modify: `.github/workflows/docker-build.yml`
 
 - [x] **Step 1: Make `build` depend on `mode`**
@@ -73,7 +76,7 @@ This job centralizes the event decision so later jobs do not duplicate the full 
 Set:
 
 ```yaml
-    needs: mode
+needs: mode
 ```
 
 on the `build` job.
@@ -83,16 +86,18 @@ on the `build` job.
 Set the build strategy matrix to the JSON emitted by the `mode` job:
 
 ```yaml
-      matrix: ${{ fromJSON(needs.mode.outputs.matrix) }}
+matrix: ${{ fromJSON(needs.mode.outputs.matrix) }}
 ```
 
 Expected behavior:
+
 - Nightly runs create only the `amd64` matrix entry.
 - Release/manual/tag runs create both `amd64` and `arm64` matrix entries.
 
 ### Task 3: Generate Conditional Final Tags
 
 **Files:**
+
 - Modify: `.github/workflows/docker-build.yml`
 
 - [x] **Step 1: Make `merge` depend on `mode` and `build`**
@@ -100,9 +105,9 @@ Expected behavior:
 Set:
 
 ```yaml
-    needs:
-      - mode
-      - build
+needs:
+  - mode
+  - build
 ```
 
 on the `merge` job.
@@ -112,23 +117,25 @@ on the `merge` job.
 In the merge job's Docker metadata step, replace the unconditional release tag list with conditional tags:
 
 ```yaml
-          tags: |
-            type=sha,prefix=sha-
-            type=raw,value=nightly,enable=${{ needs.mode.outputs.nightly == 'true' }}
-            type=raw,value=nightly-{{date 'YYYYMMDDHHmmss' tz='UTC'}},enable=${{ needs.mode.outputs.nightly == 'true' }}
-            type=raw,value=latest,enable=${{ needs.mode.outputs.release == 'true' }}
-            type=raw,value=v${{ steps.version.outputs.version }},enable=${{ needs.mode.outputs.release == 'true' }}
-            type=raw,value=v${{ steps.semver.outputs.major }}.${{ steps.semver.outputs.minor }},enable=${{ needs.mode.outputs.release == 'true' }}
-            type=raw,value=v${{ steps.semver.outputs.major }},enable=${{ needs.mode.outputs.release == 'true' }}
+tags: |
+  type=sha,prefix=sha-
+  type=raw,value=nightly,enable=${{ needs.mode.outputs.nightly == 'true' }}
+  type=raw,value=nightly-{{date 'YYYYMMDDHHmmss' tz='UTC'}},enable=${{ needs.mode.outputs.nightly == 'true' }}
+  type=raw,value=latest,enable=${{ needs.mode.outputs.release == 'true' }}
+  type=raw,value=v${{ steps.version.outputs.version }},enable=${{ needs.mode.outputs.release == 'true' }}
+  type=raw,value=v${{ steps.semver.outputs.major }}.${{ steps.semver.outputs.minor }},enable=${{ needs.mode.outputs.release == 'true' }}
+  type=raw,value=v${{ steps.semver.outputs.major }},enable=${{ needs.mode.outputs.release == 'true' }}
 ```
 
 Expected behavior:
+
 - Nightly runs publish `nightly`, `nightly-{UTC timestamp}`, and SHA tags.
 - Release/manual/tag runs publish `latest`, version aliases, and SHA tags.
 
 ### Task 4: Make Post-Publish Steps Mode-Aware
 
 **Files:**
+
 - Modify: `.github/workflows/docker-build.yml`
 
 - [x] **Step 1: Emit canonical image references from the manifest step**
@@ -159,10 +166,11 @@ docker buildx imagetools inspect docker.io/${{ env.IMAGE }}:${{ steps.manifest.o
 Add this condition to `Redeploy Stack`:
 
 ```yaml
-        if: ${{ needs.mode.outputs.release == 'true' }}
+if: ${{ needs.mode.outputs.release == 'true' }}
 ```
 
 Expected behavior:
+
 - Nightly publishes images, signs them, and inspects them.
 - Nightly does not redeploy the stack.
 - Release/manual/tag publishes images, signs them, inspects them, and redeploys.
@@ -170,6 +178,7 @@ Expected behavior:
 ### Task 5: Validate Workflow Logic
 
 **Files:**
+
 - Test: `.github/workflows/docker-build.yml`
 
 - [x] **Step 1: Parse YAML**
@@ -195,6 +204,7 @@ git diff -- .github/workflows/docker-build.yml docs/superpowers/plans/2026-05-15
 ```
 
 Confirm these requirements in the diff:
+
 - `push` to `main` is enabled.
 - pushed tags matching `v*` are enabled.
 - no `pull_request` trigger exists.

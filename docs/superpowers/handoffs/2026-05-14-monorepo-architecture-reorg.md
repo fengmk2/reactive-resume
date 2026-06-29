@@ -102,7 +102,7 @@ External agents should be handed exactly one task from the plan plus this handof
 - Created `@reactive-resume/mcp` with source-consumed exports for the compact public surface plus direct subpaths for server card, tool names, tools, prompts, and resources.
 - Moved MCP tools, prompts, resources, server-card generation, tool annotations, and colocated tests from `apps/web/src/routes/mcp/-helpers` to `packages/mcp/src`.
 - `apps/server/src/mcp/handler.ts` and `apps/server/src/openapi/metadata.ts` now import from `@reactive-resume/mcp`; server-side MCP execution still uses the injected in-process oRPC `RouterClient`.
-- Canonical MCP tool names are unprefixed snake_case. Key renames: `read_resume` replaces the old get-resume tool name, and `apply_resume_patch` replaces the old patch tool name. No `reactive_resume_*` aliases remain.
+- Canonical MCP tool names are unprefixed snake*case. Key renames: `read_resume` replaces the old get-resume tool name, and `apply_resume_patch` replaces the old patch tool name. No `reactive_resume*\*` aliases remain.
 - Added `@reactive-resume/ai/tools/resume-tool-contracts` and reused its JSON Patch operations schema from MCP while keeping MCP-specific `id` context in the MCP input schema.
 - Validation passed for `@reactive-resume/mcp` tests/typecheck, `server` typecheck, `@reactive-resume/ai` typecheck, focused Biome check, and the app-to-app import scan.
 

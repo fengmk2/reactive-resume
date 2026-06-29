@@ -8,79 +8,79 @@ export type FontWeight = "100" | "200" | "300" | "400" | "500" | "600" | "700" |
 export type FontFileWeight = FontWeight | `${FontWeight}italic`;
 
 export type StandardFont = {
-	type: "standard";
-	category: FontCategory;
-	family: string;
-	weights: FontWeight[];
+  type: "standard";
+  category: FontCategory;
+  family: string;
+  weights: FontWeight[];
 };
 
 export type WebFont = {
-	type: "web";
-	category: FontCategory;
-	family: string;
-	weights: FontWeight[];
-	preview: string;
-	files: Record<FontFileWeight, string>;
+  type: "web";
+  category: FontCategory;
+  family: string;
+  weights: FontWeight[];
+  preview: string;
+  files: Record<FontFileWeight, string>;
 };
 
 export type FontRecord = StandardFont | WebFont;
 
 const preferredChineseFontFamilies = [
-	"Noto Sans SC",
-	"Noto Serif SC",
-	"PingFang SC",
-	"Microsoft YaHei",
-	"Source Han Sans SC",
-	"Source Han Serif SC",
-	"Songti SC",
-	"SimSun",
-	"SimHei",
-	"KaiTi",
-	"FangSong",
-	"ZCOOL QingKe HuangYou",
+  "Noto Sans SC",
+  "Noto Serif SC",
+  "PingFang SC",
+  "Microsoft YaHei",
+  "Source Han Sans SC",
+  "Source Han Serif SC",
+  "Songti SC",
+  "SimSun",
+  "SimHei",
+  "KaiTi",
+  "FangSong",
+  "ZCOOL QingKe HuangYou",
 ] as const;
 
 const standardPdfFontList = [
-	{ type: "standard", category: "sans-serif", family: "Helvetica", weights: ["400", "700"] },
-	{ type: "standard", category: "monospace", family: "Courier", weights: ["400", "700"] },
-	{ type: "standard", category: "serif", family: "Times-Roman", weights: ["400", "700"] },
+  { type: "standard", category: "sans-serif", family: "Helvetica", weights: ["400", "700"] },
+  { type: "standard", category: "monospace", family: "Courier", weights: ["400", "700"] },
+  { type: "standard", category: "serif", family: "Times-Roman", weights: ["400", "700"] },
 ] satisfies StandardFont[];
 
 const fontDisplayNames: Partial<Record<string, string>> = {
-	FangSong: "仿宋",
-	"Hiragino Sans GB": "冬青黑体简体中文",
-	KaiTi: "楷体",
-	"Microsoft YaHei": "微软雅黑",
-	"Noto Sans SC": "思源黑体",
-	"Noto Sans TC": "思源黑体（繁中）",
-	"Noto Serif SC": "思源宋体",
-	"Noto Serif TC": "思源宋体（繁中）",
-	"PingFang SC": "苹方",
-	SimHei: "黑体",
-	SimSun: "宋体",
-	"Songti SC": "华文宋体",
-	"Source Han Sans SC": "思源黑体（本地）",
-	"Source Han Serif SC": "思源宋体（本地）",
-	"ZCOOL QingKe HuangYou": "站酷庆科黄油体",
+  FangSong: "仿宋",
+  "Hiragino Sans GB": "冬青黑体简体中文",
+  KaiTi: "楷体",
+  "Microsoft YaHei": "微软雅黑",
+  "Noto Sans SC": "思源黑体",
+  "Noto Sans TC": "思源黑体（繁中）",
+  "Noto Serif SC": "思源宋体",
+  "Noto Serif TC": "思源宋体（繁中）",
+  "PingFang SC": "苹方",
+  SimHei: "黑体",
+  SimSun: "宋体",
+  "Songti SC": "华文宋体",
+  "Source Han Sans SC": "思源黑体（本地）",
+  "Source Han Serif SC": "思源宋体（本地）",
+  "ZCOOL QingKe HuangYou": "站酷庆科黄油体",
 };
 
 const resumeCjkSansFontFallbacks = [
-	"Noto Sans SC",
-	"PingFang SC",
-	"Hiragino Sans GB",
-	"Microsoft YaHei",
-	"SimHei",
-	"Source Han Sans SC",
-	"WenQuanYi Micro Hei",
+  "Noto Sans SC",
+  "PingFang SC",
+  "Hiragino Sans GB",
+  "Microsoft YaHei",
+  "SimHei",
+  "Source Han Sans SC",
+  "WenQuanYi Micro Hei",
 ] as const;
 
 const resumeCjkSerifFontFallbacks = [
-	"Noto Serif SC",
-	"Songti SC",
-	"SimSun",
-	"Source Han Serif SC",
-	"KaiTi",
-	"FangSong",
+  "Noto Serif SC",
+  "Songti SC",
+  "SimSun",
+  "Source Han Serif SC",
+  "KaiTi",
+  "FangSong",
 ] as const;
 
 // Per-script Noto web font, split by serif/sans category. These match the
@@ -91,31 +91,31 @@ const resumeCjkSerifFontFallbacks = [
 // serif resumes still render real glyphs instead of nothing. All entries are
 // present in webfontlist.json.
 const scriptFonts: Record<Script, { serif: string; sansSerif: string }> = {
-	hangul: { serif: "Noto Serif KR", sansSerif: "Noto Sans KR" },
-	kana: { serif: "Noto Serif JP", sansSerif: "Noto Sans JP" },
-	"han-traditional": { serif: "Noto Serif TC", sansSerif: "Noto Sans TC" },
-	"han-simplified": { serif: "Noto Serif SC", sansSerif: "Noto Sans SC" },
-	arabic: { serif: "Noto Naskh Arabic", sansSerif: "Noto Sans Arabic" },
-	hebrew: { serif: "Noto Sans Hebrew", sansSerif: "Noto Sans Hebrew" },
-	thai: { serif: "Noto Sans Thai", sansSerif: "Noto Sans Thai" },
+  hangul: { serif: "Noto Serif KR", sansSerif: "Noto Sans KR" },
+  kana: { serif: "Noto Serif JP", sansSerif: "Noto Sans JP" },
+  "han-traditional": { serif: "Noto Serif TC", sansSerif: "Noto Sans TC" },
+  "han-simplified": { serif: "Noto Serif SC", sansSerif: "Noto Sans SC" },
+  arabic: { serif: "Noto Naskh Arabic", sansSerif: "Noto Sans Arabic" },
+  hebrew: { serif: "Noto Sans Hebrew", sansSerif: "Noto Sans Hebrew" },
+  thai: { serif: "Noto Sans Thai", sansSerif: "Noto Sans Thai" },
 };
 
 const genericFontFamilies = new Set([
-	"-apple-system",
-	"BlinkMacSystemFont",
-	"cursive",
-	"emoji",
-	"fantasy",
-	"fangsong",
-	"math",
-	"monospace",
-	"sans-serif",
-	"serif",
-	"system-ui",
-	"ui-monospace",
-	"ui-rounded",
-	"ui-sans-serif",
-	"ui-serif",
+  "-apple-system",
+  "BlinkMacSystemFont",
+  "cursive",
+  "emoji",
+  "fantasy",
+  "fangsong",
+  "math",
+  "monospace",
+  "sans-serif",
+  "serif",
+  "system-ui",
+  "ui-monospace",
+  "ui-rounded",
+  "ui-sans-serif",
+  "ui-serif",
 ]);
 
 export const webFontList = webFontListJSON as WebFont[];
@@ -126,20 +126,20 @@ const fontMap = new Map<string, FontRecord>();
 const chinesePrioritySet = new Set<string>(preferredChineseFontFamilies);
 
 function orderFonts(fonts: FontRecord[]) {
-	return [...fonts].sort((a, b) => {
-		return a.family.localeCompare(b.family, undefined, { sensitivity: "base" });
-	});
+  return [...fonts].sort((a, b) => {
+    return a.family.localeCompare(b.family, undefined, { sensitivity: "base" });
+  });
 }
 
 function toCSSFontFamilyToken(fontFamily: string) {
-	if (genericFontFamilies.has(fontFamily)) return fontFamily;
-	return `'${fontFamily.replaceAll("\\", "\\\\").replaceAll("'", "\\'")}'`;
+  if (genericFontFamilies.has(fontFamily)) return fontFamily;
+  return `'${fontFamily.replaceAll("\\", "\\\\").replaceAll("'", "\\'")}'`;
 }
 
 export const fontList = orderFonts([...standardFontList, ...webFontList]);
 
 for (const font of fontList) {
-	fontMap.set(font.family, font);
+  fontMap.set(font.family, font);
 }
 
 // Compatibility aliases for fonts that v5.0.x resolved via the browser
@@ -147,80 +147,80 @@ for (const font of fontList) {
 // @react-pdf/renderer in v5.1+. Targets are metric-compatible web fonts
 // already shipped in webfontlist (#2989).
 const legacyFontAliases: Record<string, string> = {
-	Arial: "Arimo",
-	Cambria: "Tinos",
-	Calibri: "Carlito",
-	Garamond: "EB Garamond",
-	"Times New Roman": "Times-Roman",
+  Arial: "Arimo",
+  Cambria: "Tinos",
+  Calibri: "Carlito",
+  Garamond: "EB Garamond",
+  "Times New Roman": "Times-Roman",
 };
 
 export function resolveLegacyFontAlias(family: string): string | null {
-	return legacyFontAliases[family] ?? null;
+  return legacyFontAliases[family] ?? null;
 }
 
 export function getFont(family: string) {
-	const direct = fontMap.get(family);
-	if (direct) return direct;
+  const direct = fontMap.get(family);
+  if (direct) return direct;
 
-	const alias = legacyFontAliases[family];
-	return alias ? fontMap.get(alias) : undefined;
+  const alias = legacyFontAliases[family];
+  return alias ? fontMap.get(alias) : undefined;
 }
 
 function getFontCategory(family: string): FontCategory | null {
-	return getFont(family)?.category ?? null;
+  return getFont(family)?.category ?? null;
 }
 
 export function getFontDisplayName(family: string) {
-	return fontDisplayNames[family] ?? family;
+  return fontDisplayNames[family] ?? family;
 }
 
 export function getFontSearchKeywords(family: string) {
-	return unique(
-		[family, fontDisplayNames[family], chinesePrioritySet.has(family) ? "中文" : undefined].filter(
-			(keyword): keyword is string => Boolean(keyword),
-		),
-	);
+  return unique(
+    [family, fontDisplayNames[family], chinesePrioritySet.has(family) ? "中文" : undefined].filter(
+      (keyword): keyword is string => Boolean(keyword),
+    ),
+  );
 }
 
 function getCjkFallbacksByCategory(category: FontCategory | null) {
-	return category === "serif" ? resumeCjkSerifFontFallbacks : resumeCjkSansFontFallbacks;
+  return category === "serif" ? resumeCjkSerifFontFallbacks : resumeCjkSansFontFallbacks;
 }
 
 function getPrimaryCjkWebFont(family: string) {
-	const category = getFontCategory(family);
-	return category === "serif" ? "Noto Serif SC" : "Noto Sans SC";
+  const category = getFontCategory(family);
+  return category === "serif" ? "Noto Serif SC" : "Noto Sans SC";
 }
 
 function getScriptFont(script: Script, category: FontCategory | null) {
-	const variants = scriptFonts[script];
-	return category === "serif" ? variants.serif : variants.sansSerif;
+  const variants = scriptFonts[script];
+  return category === "serif" ? variants.serif : variants.sansSerif;
 }
 
 export function isStandardPdfFontFamily(family: string) {
-	return standardFontList.some((font) => font.family === family);
+  return standardFontList.some((font) => font.family === family);
 }
 
 export function getWebFont(family: string) {
-	return webFontMap.get(family);
+  return webFontMap.get(family);
 }
 
 export function getWebFontSource(family: string, weight: FontWeight = "400", italic = false) {
-	const webFont = getWebFont(family);
-	if (!webFont) return null;
+  const webFont = getWebFont(family);
+  if (!webFont) return null;
 
-	const key = `${weight}${italic ? "italic" : ""}` as FontFileWeight;
-	return webFont.files[key] ?? (italic ? webFont.files[weight] : undefined) ?? webFont.preview;
+  const key = `${weight}${italic ? "italic" : ""}` as FontFileWeight;
+  return webFont.files[key] ?? (italic ? webFont.files[weight] : undefined) ?? webFont.preview;
 }
 
 export function sortFontWeights<T extends string>(fontWeights: T[]): T[] {
-	return [...fontWeights].sort((a, b) => Number(a) - Number(b));
+  return [...fontWeights].sort((a, b) => Number(a) - Number(b));
 }
 
 export function getFallbackWebFontFamilies(family: string) {
-	if (isStandardPdfFontFamily(family)) return [];
+  if (isStandardPdfFontFamily(family)) return [];
 
-	const fallback = getPrimaryCjkWebFont(family);
-	return fallback === family ? [] : [fallback];
+  const fallback = getPrimaryCjkWebFont(family);
+  return fallback === family ? [] : [fallback];
 }
 
 /**
@@ -237,20 +237,20 @@ export function getFallbackWebFontFamilies(family: string) {
  * only keeps fonts that exist in the webfontlist.
  */
 export function getPdfFallbackFontFamilies(
-	family: string,
-	options: { locale?: Locale; scripts?: Iterable<Script> } = {},
+  family: string,
+  options: { locale?: Locale; scripts?: Iterable<Script> } = {},
 ): string[] {
-	const category = getFontCategory(family);
+  const category = getFontCategory(family);
 
-	const ordered: Script[] = [];
-	const localeScript = getLocaleScript(options.locale);
-	if (localeScript) ordered.push(localeScript);
-	if (options.scripts) ordered.push(...options.scripts);
-	if (ordered.some(isCjkScript)) ordered.push("han-simplified");
+  const ordered: Script[] = [];
+  const localeScript = getLocaleScript(options.locale);
+  if (localeScript) ordered.push(localeScript);
+  if (options.scripts) ordered.push(...options.scripts);
+  if (ordered.some(isCjkScript)) ordered.push("han-simplified");
 
-	return unique(ordered.map((script) => getScriptFont(script, category)))
-		.filter((candidate) => candidate !== family)
-		.filter((candidate) => Boolean(getWebFont(candidate)));
+  return unique(ordered.map((script) => getScriptFont(script, category)))
+    .filter((candidate) => candidate !== family)
+    .filter((candidate) => Boolean(getWebFont(candidate)));
 }
 
 /**
@@ -259,45 +259,45 @@ export function getPdfFallbackFontFamilies(
  * family, or `null` when the family already is that fallback.
  */
 export function getPdfCjkFallbackFontFamily(family: string): string | null {
-	const fallback = getPrimaryCjkWebFont(family);
-	if (fallback === family) return null;
-	if (!getWebFont(fallback)) return null;
+  const fallback = getPrimaryCjkWebFont(family);
+  if (fallback === family) return null;
+  if (!getWebFont(fallback)) return null;
 
-	return fallback;
+  return fallback;
 }
 
 export function getLoadableWebFontWeights(family: string, preferredWeights: string[]) {
-	const font = webFontMap.get(family);
-	if (!font) return [];
+  const font = webFontMap.get(family);
+  if (!font) return [];
 
-	const availableWeights = new Set<FontWeight>(font.weights);
-	const matchingWeights = unique(preferredWeights).filter((weight): weight is FontWeight =>
-		availableWeights.has(weight as FontWeight),
-	);
+  const availableWeights = new Set<FontWeight>(font.weights);
+  const matchingWeights = unique(preferredWeights).filter((weight): weight is FontWeight =>
+    availableWeights.has(weight as FontWeight),
+  );
 
-	if (matchingWeights.length > 0) return matchingWeights;
+  if (matchingWeights.length > 0) return matchingWeights;
 
-	const defaultWeights = ["400", "500", "600", "700"].filter((weight): weight is FontWeight =>
-		availableWeights.has(weight as FontWeight),
-	);
-	if (defaultWeights.length > 0) return defaultWeights.slice(0, 2);
+  const defaultWeights = ["400", "500", "600", "700"].filter((weight): weight is FontWeight =>
+    availableWeights.has(weight as FontWeight),
+  );
+  if (defaultWeights.length > 0) return defaultWeights.slice(0, 2);
 
-	return font.weights.slice(0, 2);
+  return font.weights.slice(0, 2);
 }
 
 export function buildResumeFontFamily(fontFamily: string) {
-	const category = getFontCategory(fontFamily);
-	const genericFallback = category === "serif" ? "serif" : "sans-serif";
+  const category = getFontCategory(fontFamily);
+  const genericFallback = category === "serif" ? "serif" : "sans-serif";
 
-	return unique([
-		fontFamily,
-		...getCjkFallbacksByCategory(category),
-		"system-ui",
-		"-apple-system",
-		"BlinkMacSystemFont",
-		"Segoe UI",
-		genericFallback,
-	])
-		.map(toCSSFontFamilyToken)
-		.join(", ");
+  return unique([
+    fontFamily,
+    ...getCjkFallbacksByCategory(category),
+    "system-ui",
+    "-apple-system",
+    "BlinkMacSystemFont",
+    "Segoe UI",
+    genericFallback,
+  ])
+    .map(toCSSFontFamilyToken)
+    .join(", ");
 }

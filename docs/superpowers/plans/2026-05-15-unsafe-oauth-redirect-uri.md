@@ -23,6 +23,7 @@
 ### Task 1: URL Policy Tests And Validator
 
 **Files:**
+
 - Modify: `packages/utils/src/url-security.node.test.ts`
 - Modify: `packages/utils/src/url-security.node.ts`
 
@@ -32,21 +33,23 @@ Use this shape in `packages/utils/src/url-security.node.test.ts`:
 
 ```ts
 describe("isAllowedOAuthRedirectUri", () => {
-	const trustedOrigins = ["https://app.example.com"];
+  const trustedOrigins = ["https://app.example.com"];
 
-	it("returns false for malformed URI", () => {
-		expect(isAllowedOAuthRedirectUri("nope", trustedOrigins)).toBe(false);
-	});
+  it("returns false for malformed URI", () => {
+    expect(isAllowedOAuthRedirectUri("nope", trustedOrigins)).toBe(false);
+  });
 
-	it("returns true for any parseable URI when unsafe mode is enabled", () => {
-		const options = { allowUnsafe: true };
+  it("returns true for any parseable URI when unsafe mode is enabled", () => {
+    const options = { allowUnsafe: true };
 
-		expect(isAllowedOAuthRedirectUri("myapp://callback", trustedOrigins, options)).toBe(true);
-		expect(isAllowedOAuthRedirectUri("http://example.com/cb", trustedOrigins, options)).toBe(true);
-		expect(isAllowedOAuthRedirectUri("https://192.168.1.1/cb", trustedOrigins, options)).toBe(true);
-		expect(isAllowedOAuthRedirectUri("https://u:p@app.example.com/cb#x", trustedOrigins, options)).toBe(true);
-		expect(isAllowedOAuthRedirectUri("not a url", trustedOrigins, options)).toBe(false);
-	});
+    expect(isAllowedOAuthRedirectUri("myapp://callback", trustedOrigins, options)).toBe(true);
+    expect(isAllowedOAuthRedirectUri("http://example.com/cb", trustedOrigins, options)).toBe(true);
+    expect(isAllowedOAuthRedirectUri("https://192.168.1.1/cb", trustedOrigins, options)).toBe(true);
+    expect(
+      isAllowedOAuthRedirectUri("https://u:p@app.example.com/cb#x", trustedOrigins, options),
+    ).toBe(true);
+    expect(isAllowedOAuthRedirectUri("not a url", trustedOrigins, options)).toBe(false);
+  });
 });
 ```
 
@@ -62,28 +65,28 @@ Use this signature in `packages/utils/src/url-security.node.ts`:
 
 ```ts
 type OAuthRedirectUriOptions = {
-	allowUnsafe?: boolean;
+  allowUnsafe?: boolean;
 };
 
 export function isAllowedOAuthRedirectUri(
-	input: string,
-	trustedOrigins: string[],
-	options?: OAuthRedirectUriOptions,
+  input: string,
+  trustedOrigins: string[],
+  options?: OAuthRedirectUriOptions,
 ) {
-	const parsed = parseUrl(input);
-	if (!parsed) return false;
-	if (options?.allowUnsafe) return true;
-	if (parsed.username || parsed.password) return false;
-	if (parsed.hash) return false;
+  const parsed = parseUrl(input);
+  if (!parsed) return false;
+  if (options?.allowUnsafe) return true;
+  if (parsed.username || parsed.password) return false;
+  if (parsed.hash) return false;
 
-	const origin = parsed.origin.toLowerCase();
-	const hostname = normalizeHostname(parsed.hostname);
+  const origin = parsed.origin.toLowerCase();
+  const hostname = normalizeHostname(parsed.hostname);
 
-	if (parsed.protocol === "http:") return isOAuthLoopbackRedirectHost(hostname);
-	if (parsed.protocol !== "https:") return false;
-	if (isPrivateOrLoopbackHost(hostname)) return false;
+  if (parsed.protocol === "http:") return isOAuthLoopbackRedirectHost(hostname);
+  if (parsed.protocol !== "https:") return false;
+  if (isPrivateOrLoopbackHost(hostname)) return false;
 
-	return trustedOrigins.includes(origin);
+  return trustedOrigins.includes(origin);
 }
 ```
 
@@ -96,6 +99,7 @@ Expected after implementation: all tests in `url-security.node.test.ts` pass.
 ### Task 2: Env And Runtime Wiring
 
 **Files:**
+
 - Modify: `packages/env/src/server.ts`
 - Modify: `packages/auth/src/config.ts`
 - Modify: `apps/server/src/http/auth.ts`
@@ -124,13 +128,13 @@ In `packages/auth/src/config.ts`, remove `parseAllowedHostList` usage and call:
 
 ```ts
 if (
-	!isAllowedOAuthRedirectUri(uri, TRUSTED_ORIGINS, {
-		allowUnsafe: env.FLAG_ALLOW_UNSAFE_OAUTH_REDIRECT_URI,
-	})
+  !isAllowedOAuthRedirectUri(uri, TRUSTED_ORIGINS, {
+    allowUnsafe: env.FLAG_ALLOW_UNSAFE_OAUTH_REDIRECT_URI,
+  })
 ) {
-	throw new APIError("BAD_REQUEST", {
-		message: "redirect_uri is not allowed for dynamic client registration",
-	});
+  throw new APIError("BAD_REQUEST", {
+    message: "redirect_uri is not allowed for dynamic client registration",
+  });
 }
 ```
 
@@ -140,8 +144,8 @@ In `apps/server/src/http/auth.ts`, remove `parseAllowedHostList` usage and call:
 
 ```ts
 !isAllowedOAuthRedirectUri(redirectUri, oauthTrustedOrigins, {
-	allowUnsafe: env.FLAG_ALLOW_UNSAFE_OAUTH_REDIRECT_URI,
-})
+  allowUnsafe: env.FLAG_ALLOW_UNSAFE_OAUTH_REDIRECT_URI,
+});
 ```
 
 Update the test env mock in `apps/server/src/http/auth.test.ts`:
@@ -168,6 +172,7 @@ Expected: both commands exit 0.
 ### Task 3: Docs And Env Examples
 
 **Files:**
+
 - Modify: `.env.example`
 - Modify: `docs/self-hosting/docker.mdx`
 - Modify: `docs/self-hosting/sso.mdx`
@@ -196,6 +201,7 @@ Expected: matches in env schema, Turbo config, docs, tests, and runtime validati
 ### Task 4: Final Verification
 
 **Files:**
+
 - Verify all modified files.
 
 - [ ] **Step 1: Run focused tests**

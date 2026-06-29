@@ -11,20 +11,20 @@ const storageKey = "theme";
 const defaultTheme: Theme = "dark";
 
 export const themeMap = {
-	light: msg`Light`,
-	dark: msg`Dark`,
+  light: msg`Light`,
+  dark: msg`Dark`,
 } satisfies Record<Theme, MessageDescriptor>;
 
 export function isTheme(theme: string): theme is Theme {
-	return themeSchema.safeParse(theme).success;
+  return themeSchema.safeParse(theme).success;
 }
 
 export const getTheme = () => {
-	const theme = Cookies.get(storageKey);
-	if (!theme || !isTheme(theme)) return defaultTheme;
-	return theme;
+  const theme = Cookies.get(storageKey);
+  if (!theme || !isTheme(theme)) return defaultTheme;
+  return theme;
 };
 
 export const setThemeCookie = (theme: Theme) => {
-	Cookies.set(storageKey, theme);
+  Cookies.set(storageKey, theme);
 };

@@ -6,19 +6,19 @@ import { ProfileSettingsPage } from "@/features/settings/pages/profile";
 import { DashboardHeader } from "../-components/header";
 
 export const Route = createFileRoute("/dashboard/settings/profile")({
-	component: RouteComponent,
+  component: RouteComponent,
 });
 
 function RouteComponent() {
-	const { session } = Route.useRouteContext();
+  const { session } = Route.useRouteContext();
 
-	return (
-		<div className="space-y-4">
-			<DashboardHeader icon={UserCircleIcon} title={t`Profile`} />
+  return (
+    <div className="space-y-4">
+      <DashboardHeader icon={UserCircleIcon} title={t`Profile`} />
 
-			<Separator />
+      <Separator />
 
-			<ProfileSettingsPage session={session} />
-		</div>
-	);
+      <ProfileSettingsPage session={session} />
+    </div>
+  );
 }

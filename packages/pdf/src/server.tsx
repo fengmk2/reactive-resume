@@ -6,26 +6,26 @@ import { ResumeDocument } from "./document";
 import { renderToBuffer } from "./renderer";
 
 type CreateResumePdfFileOptions = {
-	data: ResumeData;
-	filename: string;
-	template?: Template | undefined;
-	resolveSectionTitle?: SectionTitleResolver | undefined;
+  data: ResumeData;
+  filename: string;
+  template?: Template | undefined;
+  resolveSectionTitle?: SectionTitleResolver | undefined;
 };
 
 export const createResumePdfFile = async ({
-	data,
-	filename,
-	template,
-	resolveSectionTitle,
+  data,
+  filename,
+  template,
+  resolveSectionTitle,
 }: CreateResumePdfFileOptions) => {
-	const document = createElement(ResumeDocument, {
-		data,
-		template: template ?? data.metadata.template,
-		resolveSectionTitle,
-	}) as Parameters<typeof renderToBuffer>[0];
-	const buffer = await renderToBuffer(document);
-	const bytes = new Uint8Array(new ArrayBuffer(buffer.byteLength));
-	bytes.set(buffer);
+  const document = createElement(ResumeDocument, {
+    data,
+    template: template ?? data.metadata.template,
+    resolveSectionTitle,
+  }) as Parameters<typeof renderToBuffer>[0];
+  const buffer = await renderToBuffer(document);
+  const bytes = new Uint8Array(new ArrayBuffer(buffer.byteLength));
+  bytes.set(buffer);
 
-	return new File([bytes], filename, { type: "application/pdf" });
+  return new File([bytes], filename, { type: "application/pdf" });
 };

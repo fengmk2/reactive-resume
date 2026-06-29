@@ -6,46 +6,46 @@ import { BatchLinkPlugin } from "@orpc/client/plugins";
 import { createTanstackQueryUtils } from "@orpc/tanstack-query";
 
 const getRpcUrl = () => {
-	if (typeof window === "undefined") return "http://localhost:3000/api/rpc";
-	return `${window.location.origin}/api/rpc`;
+  if (typeof window === "undefined") return "http://localhost:3000/api/rpc";
+  return `${window.location.origin}/api/rpc`;
 };
 
 const createRpcClient = (): RouterClient<typeof router> => {
-	const link = new RPCLink({
-		url: getRpcUrl(),
-		fetch: (request, init) => fetch(request, { ...init, credentials: "include" }),
-		plugins: [
-			new BatchLinkPlugin({
-				mode: "streaming",
-				groups: [{ condition: () => true, context: {} }],
-			}),
-		],
-		interceptors: [
-			onError((error) => {
-				if (error instanceof DOMException && error.name === "AbortError") return;
-				console.warn("[oRPC client]", error);
-			}),
-		],
-	});
+  const link = new RPCLink({
+    url: getRpcUrl(),
+    fetch: (request, init) => fetch(request, { ...init, credentials: "include" }),
+    plugins: [
+      new BatchLinkPlugin({
+        mode: "streaming",
+        groups: [{ condition: () => true, context: {} }],
+      }),
+    ],
+    interceptors: [
+      onError((error) => {
+        if (error instanceof DOMException && error.name === "AbortError") return;
+        console.warn("[oRPC client]", error);
+      }),
+    ],
+  });
 
-	return createORPCClient(link);
+  return createORPCClient(link);
 };
 
 export const client = createRpcClient();
 
 const createStreamClient = (): RouterClient<typeof router> => {
-	const link = new RPCLink({
-		url: getRpcUrl(),
-		fetch: (request, init) => fetch(request, { ...init, credentials: "include" }),
-		interceptors: [
-			onError((error) => {
-				if (error instanceof DOMException && error.name === "AbortError") return;
-				console.warn("[oRPC stream client]", error);
-			}),
-		],
-	});
+  const link = new RPCLink({
+    url: getRpcUrl(),
+    fetch: (request, init) => fetch(request, { ...init, credentials: "include" }),
+    interceptors: [
+      onError((error) => {
+        if (error instanceof DOMException && error.name === "AbortError") return;
+        console.warn("[oRPC stream client]", error);
+      }),
+    ],
+  });
 
-	return createORPCClient(link);
+  return createORPCClient(link);
 };
 
 export const streamClient = createStreamClient();

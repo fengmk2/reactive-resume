@@ -7,33 +7,33 @@ import { useLocalizedResumeDocument } from "@/features/resume/export/pdf-documen
 import { createNoindexFollowMeta } from "@/libs/seo";
 
 const PDFViewer = lazy(async () => {
-	const { PDFViewer } = await import("@react-pdf/renderer");
-	return { default: PDFViewer };
+  const { PDFViewer } = await import("@react-pdf/renderer");
+  return { default: PDFViewer };
 });
 
 export const Route = createFileRoute("/templates/$")({
-	component: TemplatePdfRoute,
-	errorComponent: () => <div>Template not found</div>,
-	head: () => ({
-		meta: [createNoindexFollowMeta()],
-	}),
+  component: TemplatePdfRoute,
+  errorComponent: () => <div>Template not found</div>,
+  head: () => ({
+    meta: [createNoindexFollowMeta()],
+  }),
 });
 
 function TemplatePdfRoute() {
-	const isClient = useIsClient();
-	const params = Route.useParams();
+  const isClient = useIsClient();
+  const params = Route.useParams();
 
-	const templateName = params._splat?.split(".")[0] ?? "azurill";
-	const template = templateSchema.parse(templateName);
-	const resumeDocument = useLocalizedResumeDocument(sampleResumeData, template);
+  const templateName = params._splat?.split(".")[0] ?? "azurill";
+  const template = templateSchema.parse(templateName);
+  const resumeDocument = useLocalizedResumeDocument(sampleResumeData, template);
 
-	if (!isClient || !resumeDocument) return null;
+  if (!isClient || !resumeDocument) return null;
 
-	return (
-		<Suspense fallback={null}>
-			<PDFViewer showToolbar={false} style={{ height: "100svh", width: "100svw", border: "none" }}>
-				{resumeDocument}
-			</PDFViewer>
-		</Suspense>
-	);
+  return (
+    <Suspense fallback={null}>
+      <PDFViewer showToolbar={false} style={{ height: "100svh", width: "100svw", border: "none" }}>
+        {resumeDocument}
+      </PDFViewer>
+    </Suspense>
+  );
 }

@@ -3,8 +3,8 @@ import { AuthLayout } from "@/features/auth/layout";
 import { createNoindexFollowMeta } from "@/libs/seo";
 
 export const Route = createFileRoute("/auth")({
-	component: AuthLayout,
-	head: () => ({
-		meta: [createNoindexFollowMeta()],
-	}),
+  component: AuthLayout,
+  head: () => ({
+    meta: [createNoindexFollowMeta()],
+  }),
 });

@@ -62,10 +62,10 @@ You must configure endpoints using **one** of these two methods:
 
 ### Optional Variables
 
-| Variable                              | Description                                                                            | Default                |
-| ------------------------------------- | -------------------------------------------------------------------------------------- | ---------------------- |
-| `OAUTH_PROVIDER_NAME`                 | Display name shown on the sign-in button                                               | `Custom OAuth`         |
-| `OAUTH_SCOPES`                        | Space-separated list of OAuth scopes                                                   | `openid profile email` |
+| Variable              | Description                              | Default                |
+| --------------------- | ---------------------------------------- | ---------------------- |
+| `OAUTH_PROVIDER_NAME` | Display name shown on the sign-in button | `Custom OAuth`         |
+| `OAUTH_SCOPES`        | Space-separated list of OAuth scopes     | `openid profile email` |
 
 ## Callback URL
 
@@ -82,12 +82,13 @@ https://resume.example.com/api/auth/oauth2/callback/custom
 ```
 
 <Warning>
-  Make sure the callback URL exactly matches what you configure in your OAuth provider. A mismatch will cause
-  authentication to fail.
+  Make sure the callback URL exactly matches what you configure in your OAuth provider. A mismatch
+  will cause authentication to fail.
 </Warning>
 
 <Info>
-  Built-in providers (Google, GitHub, LinkedIn) use callback URLs in this format: `{APP_URL}/api/auth/callback/
+  Built-in providers (Google, GitHub, LinkedIn) use callback URLs in this format: `{APP_URL}
+  /api/auth/callback/
   {provider}` (for example `.../google`, `.../github`, `.../linkedin`).
 </Info>
 
@@ -110,7 +111,8 @@ Reactive Resume automatically maps user profile data from the OAuth provider. Th
 | **Avatar**            | `image` → `picture` → `avatar_url`            |
 
 <Info>
-  The OAuth provider **must** return an email address. If no email is provided, authentication will fail with an error.
+  The OAuth provider **must** return an email address. If no email is provided, authentication will
+  fail with an error.
 </Info>
 
 ## Provider-Specific Setup
@@ -137,7 +139,9 @@ Reactive Resume automatically maps user profile data from the OAuth provider. Th
 
   </Step>
 
-<Step title="Copy credentials">From the provider settings, copy the **Client ID** and **Client Secret**.</Step>
+<Step title="Copy credentials">
+  From the provider settings, copy the **Client ID** and **Client Secret**.
+</Step>
 
   <Step title="Configure environment variables">
 ```bash .env
@@ -288,13 +292,14 @@ OAUTH_DISCOVERY_URL="https://auth.company.com/application/o/reactive-resume/.wel
 
 <Accordion title="Redirect URI mismatch error">
   The callback URL configured in your OAuth provider must exactly match: ```
-  {APP_URL}/api/auth/oauth2/callback/custom ``` Common issues: - Trailing slash mismatch - HTTP vs HTTPS mismatch - Port
-  number differences - Path case sensitivity
+  {APP_URL}/api/auth/oauth2/callback/custom ``` Common issues: - Trailing slash mismatch - HTTP vs
+  HTTPS mismatch - Port number differences - Path case sensitivity
 </Accordion>
 
 <Accordion title="Session/cookie issues after successful OAuth login">
-  Common cause: `APP_URL` does not match the real HTTPS public origin (for example, app is behind TLS but `APP_URL` is
-  `http://...`). Fix: set `APP_URL` to the canonical HTTPS URL and restart the app.
+  Common cause: `APP_URL` does not match the real HTTPS public origin (for example, app is behind
+  TLS but `APP_URL` is `http://...`). Fix: set `APP_URL` to the canonical HTTPS URL and restart the
+  app.
 </Accordion>
 
   <Accordion title="Custom OAuth button not appearing">
@@ -307,16 +312,17 @@ OAUTH_DISCOVERY_URL="https://auth.company.com/application/o/reactive-resume/.wel
   </Accordion>
 
 <Accordion title="CORS or network errors during authentication">
-  If running behind a reverse proxy: - Ensure `APP_URL` matches your public URL - Verify the proxy passes the correct
-  headers (`X-Forwarded-Proto`, `X-Forwarded-Host`) - Check that your OAuth provider allows the redirect URI from your
-  domain
+  If running behind a reverse proxy: - Ensure `APP_URL` matches your public URL - Verify the proxy
+  passes the correct headers (`X-Forwarded-Proto`, `X-Forwarded-Host`) - Check that your OAuth
+  provider allows the redirect URI from your domain
 </Accordion>
 
 <Accordion title="Dynamic client redirect URI is rejected">
-  Dynamic OAuth client registration allows the app origin and local loopback callbacks by default. Trusted self-hosted
-  deployments that need arbitrary redirect URIs can enable `FLAG_ALLOW_UNSAFE_OAUTH_REDIRECT_URI`, which permits any
-  parseable redirect URI including custom schemes, private hosts, and non-loopback `http://` URLs. Do not enable it on
-  public or multi-tenant deployments.
+  Dynamic OAuth client registration allows the app origin and local loopback callbacks by default.
+  Trusted self-hosted deployments that need arbitrary redirect URIs can enable
+  `FLAG_ALLOW_UNSAFE_OAUTH_REDIRECT_URI`, which permits any parseable redirect URI including custom
+  schemes, private hosts, and non-loopback `http://` URLs. Do not enable it on public or
+  multi-tenant deployments.
 </Accordion>
 
   <Accordion title="User profile data is missing or incorrect">
@@ -334,19 +340,23 @@ OAUTH_DISCOVERY_URL="https://auth.company.com/application/o/reactive-resume/.wel
 
 <CardGroup cols={2}>
   <Card title="Use HTTPS" icon="lock">
-    Always use HTTPS for both your Reactive Resume instance and OAuth provider in production. OAuth tokens should never
-    be transmitted over unencrypted connections.
+    Always use HTTPS for both your Reactive Resume instance and OAuth provider in production. OAuth
+    tokens should never be transmitted over unencrypted connections.
   </Card>
   <Card title="Protect secrets" icon="key">
-    Never commit `OAUTH_CLIENT_SECRET` to version control. Use environment variables or a secrets manager.
+    Never commit `OAUTH_CLIENT_SECRET` to version control. Use environment variables or a secrets
+    manager.
   </Card>
   <Card title="Verify redirect URIs" icon="shield-check">
-    Configure your OAuth provider to only allow the exact redirect URI. Avoid wildcards in redirect URI configurations.
+    Configure your OAuth provider to only allow the exact redirect URI. Avoid wildcards in redirect
+    URI configurations.
   </Card>
   <Card title="Protect auth internals" icon="shield">
-    Keep `AUTH_SECRET` and `BETTER_AUTH_API_KEY` private. Rotating `AUTH_SECRET` may invalidate active sessions.
+    Keep `AUTH_SECRET` and `BETTER_AUTH_API_KEY` private. Rotating `AUTH_SECRET` may invalidate
+    active sessions.
   </Card>
   <Card title="Review scopes" icon="list-check">
-    Only request the scopes you need. The default (`openid profile email`) is sufficient for Reactive Resume.
+    Only request the scopes you need. The default (`openid profile email`) is sufficient for
+    Reactive Resume.
   </Card>
 </CardGroup>
