@@ -43,15 +43,15 @@ Internal packages are source-consumed through `package.json` export maps that po
 
 ```ts
 type IntentSelectFieldProps<TValue extends string> = {
-	label: string;
-	id: string;
-	value: TValue | undefined;
-	options: readonly ComboboxOption<TValue>[];
-	onChange: (value: TValue | undefined) => void;
+  label: string;
+  id: string;
+  value: TValue | undefined;
+  options: readonly ComboboxOption<TValue>[];
+  onChange: (value: TValue | undefined) => void;
 };
 
 function IntentSelectField<TValue extends string>(props: IntentSelectFieldProps<TValue>) {
-	// ...
+  // ...
 }
 ```
 
@@ -119,20 +119,20 @@ When running dev servers or migration commands, prefix the command with `dotenvx
 
 ### Common commands
 
-| Task | Command |
-|------|---------|
-| Install deps | `pnpm install` |
-| Start Postgres only | `sudo docker compose -f compose.dev.yml up -d postgres` |
+| Task                       | Command                                                                                   |
+| -------------------------- | ----------------------------------------------------------------------------------------- |
+| Install deps               | `pnpm install`                                                                            |
+| Start Postgres only        | `sudo docker compose -f compose.dev.yml up -d postgres`                                   |
 | Start Postgres + SeaweedFS | `sudo docker compose -f compose.dev.yml up -d postgres seaweedfs seaweedfs_create_bucket` |
-| Generate migrations | `dotenvx run -f .env.local -- pnpm db:generate` |
-| Run migrations | `dotenvx run -f .env.local -- pnpm db:migrate` |
-| Dev server | `dotenvx run -f .env.local -- pnpm dev` (starts on port 3000) |
-| Web dev server only | `dotenvx run -f .env.local -- pnpm dev:web` |
-| Lint/format | `pnpm check` (Biome) |
-| Boundary check | `pnpm exec turbo boundaries` |
-| Tests | `pnpm test` (Vitest) |
-| Build | `pnpm build` |
-| Typecheck | `pnpm typecheck` |
+| Generate migrations        | `dotenvx run -f .env.local -- pnpm db:generate`                                           |
+| Run migrations             | `dotenvx run -f .env.local -- pnpm db:migrate`                                            |
+| Dev server                 | `dotenvx run -f .env.local -- pnpm dev` (starts on port 3000)                             |
+| Web dev server only        | `dotenvx run -f .env.local -- pnpm dev:web`                                               |
+| Lint/format                | `pnpm check` (Biome)                                                                      |
+| Boundary check             | `pnpm exec turbo boundaries`                                                              |
+| Tests                      | `pnpm test` (Vitest)                                                                      |
+| Build                      | `pnpm build`                                                                              |
+| Typecheck                  | `pnpm typecheck`                                                                          |
 
 For focused validation, prefer package filters before repo-wide commands, for example:
 

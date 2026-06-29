@@ -1,4 +1,4 @@
 {
-	"extends": ["//"],
-	"tags": ["runtime:browser", "role:ui"]
+  "extends": ["//"],
+  "tags": ["runtime:browser", "role:ui"]
 }

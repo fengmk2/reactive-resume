@@ -6,17 +6,17 @@ import { PreferencesSettingsPage } from "@/features/settings/pages/preferences";
 import { DashboardHeader } from "../-components/header";
 
 export const Route = createFileRoute("/dashboard/settings/preferences")({
-	component: RouteComponent,
+  component: RouteComponent,
 });
 
 function RouteComponent() {
-	return (
-		<div className="space-y-4">
-			<DashboardHeader icon={GearSixIcon} title={t`Preferences`} />
+  return (
+    <div className="space-y-4">
+      <DashboardHeader icon={GearSixIcon} title={t`Preferences`} />
 
-			<Separator />
+      <Separator />
 
-			<PreferencesSettingsPage />
-		</div>
-	);
+      <PreferencesSettingsPage />
+    </div>
+  );
 }

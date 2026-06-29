@@ -1,4 +1,4 @@
 {
-	"extends": ["//"],
-	"tags": ["runtime:server", "role:tooling"]
+  "extends": ["//"],
+  "tags": ["runtime:server", "role:tooling"]
 }

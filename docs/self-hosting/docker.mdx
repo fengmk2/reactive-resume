@@ -4,7 +4,10 @@ description: "A comprehensive guide to self-host Reactive Resume with Docker (Po
 ---
 
 <Info>
-  **From v5.1.0 onwards** — PDF generation now runs entirely client-side via `@react-pdf/renderer`. New deployments no longer require Browserless, Chromium, or any external print service as a dependency. The `PRINTER_*` and `BROWSERLESS_*` environment variables are no longer read and can be removed from your `.env`.
+  **From v5.1.0 onwards** — PDF generation now runs entirely client-side via `@react-pdf/renderer`.
+  New deployments no longer require Browserless, Chromium, or any external print service as a
+  dependency. The `PRINTER_*` and `BROWSERLESS_*` environment variables are no longer read and can
+  be removed from your `.env`.
 </Info>
 
 ## Overview
@@ -14,7 +17,8 @@ Reactive Resume can be self-hosted using Docker in a matter of minutes, and this
 <CardGroup cols={2}>
   <Card title="PostgreSQL">Stores accounts, resumes, and application data.</Card>
   <Card title="Email (optional)">
-    SMTP for verification emails, password reset, etc. If not configured, emails are logged to the server console.
+    SMTP for verification emails, password reset, etc. If not configured, emails are logged to the
+    server console.
   </Card>
   <Card title="Storage (optional)">
     Use S3-compatible storage, or local persistent storage via <code>/app/data</code>.
@@ -29,9 +33,15 @@ You can pull the latest app image from:
 ## Minimum requirements
 
 <CardGroup cols={1}>
-  <Card title="Docker + Docker Compose">Docker Engine + Docker Compose plugin (or Docker Desktop).</Card>
-  <Card title="Compute">1 vCPU / 1 GB RAM minimum (2 GB recommended if Postgres runs on the same host).</Card>
-  <Card title="Storage">Enough for Postgres + uploads (start with 10-20 GB and scale as needed).</Card>
+  <Card title="Docker + Docker Compose">
+    Docker Engine + Docker Compose plugin (or Docker Desktop).
+  </Card>
+  <Card title="Compute">
+    1 vCPU / 1 GB RAM minimum (2 GB recommended if Postgres runs on the same host).
+  </Card>
+  <Card title="Storage">
+    Enough for Postgres + uploads (start with 10-20 GB and scale as needed).
+  </Card>
 </CardGroup>
 
 ## Quickstart using Docker Compose
@@ -183,7 +193,13 @@ services:
       postgres:
         condition: service_healthy
     healthcheck:
-      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3000/api/health').then((r) => { if (!r.ok) process.exit(1); }).catch(() => process.exit(1));"]
+      test:
+        [
+          "CMD",
+          "node",
+          "-e",
+          "fetch('http://127.0.0.1:3000/api/health').then((r) => { if (!r.ok) process.exit(1); }).catch(() => process.exit(1));",
+        ]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -231,8 +247,8 @@ docker compose logs -f reactive-resume
 ## How startup works (database migrations)
 
 <Info>
-  On every start, the server <b>automatically runs database migrations</b> before serving traffic. If migrations fail
-  (usually due to a DB connection issue), the container will exit with an error.
+  On every start, the server <b>automatically runs database migrations</b> before serving traffic.
+  If migrations fail (usually due to a DB connection issue), the container will exit with an error.
 </Info>
 
 ## Environment variables
@@ -257,8 +273,8 @@ docker compose logs -f reactive-resume
         SMTP (<code>SMTP_&#42;</code>)
       </li>
       <li>
-        Social auth (<code>GOOGLE_&#42;</code>, <code>GITHUB_&#42;</code>, <code>LINKEDIN_&#42;</code>,{" "}
-        <code>OAUTH_&#42;</code>)
+        Social auth (<code>GOOGLE_&#42;</code>, <code>GITHUB_&#42;</code>,{" "}
+        <code>LINKEDIN_&#42;</code>, <code>OAUTH_&#42;</code>)
       </li>
       <li>
         S3 storage (<code>S3_&#42;</code>)
@@ -282,10 +298,11 @@ docker compose logs -f reactive-resume
   </Accordion>
 
 <Accordion title="Database (PostgreSQL)">
-  - **`DATABASE_URL`**: Postgres connection string in the format `postgresql://USER:PASSWORD@HOST:PORT/DATABASE`. - In
-  Docker Compose, set `HOST` to the Postgres service name (e.g. `postgres`), not `localhost`. - If your password
-  contains special characters (`@`, `#`, `:`), URL-encode it. - For managed Postgres, add provider-specific params (for
-  example `?sslmode=require`) when needed.
+  - **`DATABASE_URL`**: Postgres connection string in the format
+  `postgresql://USER:PASSWORD@HOST:PORT/DATABASE`. - In Docker Compose, set `HOST` to the Postgres
+  service name (e.g. `postgres`), not `localhost`. - If your password contains special characters
+  (`@`, `#`, `:`), URL-encode it. - For managed Postgres, add provider-specific params (for example
+  `?sslmode=require`) when needed.
 </Accordion>
 
   <Accordion title="Authentication">
@@ -347,11 +364,12 @@ openssl rand -hex 32
 <Accordion title="AI features (optional)">
   Saved AI provider management is usable only when **`ENCRYPTION_SECRET`** is configured. The AI Agent workspace also requires **`REDIS_URL`**. The rest of Reactive Resume can run without them.
 
-  - **`REDIS_URL`**: Redis connection string used by the AI Agent workspace.
-  - **`ENCRYPTION_SECRET`**: Secret used to encrypt saved AI provider credentials. Generate with `openssl rand -hex 32`.
-  - Live web research depends on the selected AI provider/model supporting native web search. The app does not run its own URL crawler.
+- **`REDIS_URL`**: Redis connection string used by the AI Agent workspace.
+- **`ENCRYPTION_SECRET`**: Secret used to encrypt saved AI provider credentials. Generate with `openssl rand -hex 32`.
+- Live web research depends on the selected AI provider/model supporting native web search. The app does not run its own URL crawler.
 
-  If you use the Postgres-only Compose example above and want the AI Agent workspace, add a Redis service or use managed Redis, then set `REDIS_URL`.
+If you use the Postgres-only Compose example above and want the AI Agent workspace, add a Redis service or use managed Redis, then set `REDIS_URL`.
+
 </Accordion>
 
 <Accordion title="Feature Flags">
@@ -420,7 +438,13 @@ The Docker Compose configuration includes a health check that periodically calls
 
 ```yaml
 healthcheck:
-  test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3000/api/health').then((r) => { if (!r.ok) process.exit(1); }).catch(() => process.exit(1));"]
+  test:
+    [
+      "CMD",
+      "node",
+      "-e",
+      "fetch('http://127.0.0.1:3000/api/health').then((r) => { if (!r.ok) process.exit(1); }).catch(() => process.exit(1));",
+    ]
   interval: 30s
   timeout: 10s
   retries: 3
@@ -438,8 +462,8 @@ Most reverse proxies (such as **Traefik**, **Caddy**, or **nginx** with upstream
 This is particularly useful in high-availability setups where you have multiple instances of Reactive Resume. If one instance becomes unhealthy (for example, it loses database or storage connectivity), the reverse proxy will stop routing traffic to it until it recovers.
 
 <Tip>
-  If you're using **Traefik**, it automatically respects Docker health checks when using the Docker provider. Unhealthy
-  containers are excluded from routing without any additional configuration.
+  If you're using **Traefik**, it automatically respects Docker health checks when using the Docker
+  provider. Unhealthy containers are excluded from routing without any additional configuration.
 </Tip>
 
 ### Manually checking health
@@ -469,35 +493,39 @@ A healthy response returns HTTP 200. Any other response (or a connection failure
   </Accordion>
 
 <Accordion title="Can't sign in / redirects loop / cookies don't stick">
-  - **Common cause**: `APP_URL` doesn't match the URL you're actually using (especially behind a reverse proxy), or
-  you're serving HTTPS while `APP_URL` is `http://...`. - **Fix**: set `APP_URL` to your canonical public HTTPS URL and
-  restart the container.
+  - **Common cause**: `APP_URL` doesn't match the URL you're actually using (especially behind a
+  reverse proxy), or you're serving HTTPS while `APP_URL` is `http://...`. - **Fix**: set `APP_URL`
+  to your canonical public HTTPS URL and restart the container.
 </Accordion>
 
 <Accordion title="PDF export fails or downloads an empty file">
-  - **Common cause**: PDFs are now rendered in the browser via `@react-pdf/renderer`, so failures usually come from a
-  blocked download, an extreme browser memory limit, or a custom CSP that strips inline workers. - **Checks**: confirm
-  the browser is up to date, the page hasn't been opened in a restricted iframe, and that no extension is intercepting
-  the download. There is no server-side printer to inspect.
+  - **Common cause**: PDFs are now rendered in the browser via `@react-pdf/renderer`, so failures
+  usually come from a blocked download, an extreme browser memory limit, or a custom CSP that strips
+  inline workers. - **Checks**: confirm the browser is up to date, the page hasn't been opened in a
+  restricted iframe, and that no extension is intercepting the download. There is no server-side
+  printer to inspect.
 </Accordion>
 
 <Accordion title="/api/health returns 503 even though Postgres is up">
-  - **Common cause**: storage health failed (not only database). - **Fix**: inspect the endpoint response payload and
-  check the `storage` field: http://127.0.0.1:3000/api/health
+  - **Common cause**: storage health failed (not only database). - **Fix**: inspect the endpoint
+  response payload and check the `storage` field: http://127.0.0.1:3000/api/health
 </Accordion>
 
 <Accordion title="Uploads disappear after restart">
-  - **Cause**: local upload storage wasn't mounted to a persistent volume. - **Fix**: add a volume mount like
-  `./data:/app/data` and redeploy.
+  - **Cause**: local upload storage wasn't mounted to a persistent volume. - **Fix**: add a volume
+  mount like `./data:/app/data` and redeploy.
 </Accordion>
 
 <Accordion title="Emails aren't being delivered">
-  - **Expected behavior**: if SMTP isn't fully configured, the app logs emails to the console. - **Fix**: set
-  `SMTP_HOST`, `SMTP_USER`, `SMTP_PASS`, and `SMTP_FROM`, then verify `SMTP_PORT` and `SMTP_SECURE`.
+  - **Expected behavior**: if SMTP isn't fully configured, the app logs emails to the console. -
+  **Fix**: set `SMTP_HOST`, `SMTP_USER`, `SMTP_PASS`, and `SMTP_FROM`, then verify `SMTP_PORT` and
+  `SMTP_SECURE`.
 </Accordion>
 
 <Accordion title="Dynamic OAuth redirect URI is rejected">
-  - **Common cause**: redirect URI is not the app origin or a local loopback callback. - **Fix**: use an app-origin or loopback redirect URI, or enable `FLAG_ALLOW_UNSAFE_OAUTH_REDIRECT_URI` only on a trusted self-hosted deployment that needs arbitrary redirect URIs.
+  - **Common cause**: redirect URI is not the app origin or a local loopback callback. - **Fix**:
+  use an app-origin or loopback redirect URI, or enable `FLAG_ALLOW_UNSAFE_OAUTH_REDIRECT_URI` only
+  on a trusted self-hosted deployment that needs arbitrary redirect URIs.
 </Accordion>
 
   <Accordion title="S3 storage error: ENOTFOUND bucket.endpoint">

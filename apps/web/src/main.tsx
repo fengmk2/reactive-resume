@@ -10,7 +10,7 @@ if (!rootElement) throw new Error("Root element not found");
 const router = await getRouter();
 
 if (!rootElement.innerHTML) {
-	const root = ReactDOM.createRoot(rootElement);
+  const root = ReactDOM.createRoot(rootElement);
 
-	root.render(<RouterProvider router={router} />);
+  root.render(<RouterProvider router={router} />);
 }

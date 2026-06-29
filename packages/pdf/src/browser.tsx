@@ -6,17 +6,21 @@ import { ResumeDocument } from "./document";
 import { pdf } from "./renderer";
 
 type CreateResumePdfBlobOptions = {
-	data: ResumeData;
-	template?: Template | undefined;
-	resolveSectionTitle?: SectionTitleResolver | undefined;
+  data: ResumeData;
+  template?: Template | undefined;
+  resolveSectionTitle?: SectionTitleResolver | undefined;
 };
 
-export const createResumePdfBlob = async ({ data, template, resolveSectionTitle }: CreateResumePdfBlobOptions) => {
-	const document = createElement(ResumeDocument, {
-		data,
-		template: template ?? data.metadata.template,
-		resolveSectionTitle,
-	}) as Parameters<typeof pdf>[0];
+export const createResumePdfBlob = async ({
+  data,
+  template,
+  resolveSectionTitle,
+}: CreateResumePdfBlobOptions) => {
+  const document = createElement(ResumeDocument, {
+    data,
+    template: template ?? data.metadata.template,
+    resolveSectionTitle,
+  }) as Parameters<typeof pdf>[0];
 
-	return pdf(document).toBlob();
+  return pdf(document).toBlob();
 };

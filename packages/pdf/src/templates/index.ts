@@ -17,41 +17,42 @@ import { RhyhornPage } from "./rhyhorn/RhyhornPage";
 import { ScizorPage } from "./scizor/ScizorPage";
 
 export const templatePages: Partial<Record<Template, TemplatePage>> = {
-	azurill: AzurillPage,
-	bronzor: BronzorPage,
-	chikorita: ChikoritaPage,
-	ditgar: DitgarPage,
-	ditto: DittoPage,
-	gengar: GengarPage,
-	glalie: GlaliePage,
-	kakuna: KakunaPage,
-	lapras: LaprasPage,
-	leafish: LeafishPage,
-	meowth: MeowthPage,
-	onyx: OnyxPage,
-	pikachu: PikachuPage,
-	rhyhorn: RhyhornPage,
-	scizor: ScizorPage,
+  azurill: AzurillPage,
+  bronzor: BronzorPage,
+  chikorita: ChikoritaPage,
+  ditgar: DitgarPage,
+  ditto: DittoPage,
+  gengar: GengarPage,
+  glalie: GlaliePage,
+  kakuna: KakunaPage,
+  lapras: LaprasPage,
+  leafish: LeafishPage,
+  meowth: MeowthPage,
+  onyx: OnyxPage,
+  pikachu: PikachuPage,
+  rhyhorn: RhyhornPage,
+  scizor: ScizorPage,
 };
 
 export const defaultTemplatePage = AzurillPage;
 
-export const getTemplatePage = (template: Template): TemplatePage => templatePages[template] ?? defaultTemplatePage;
+export const getTemplatePage = (template: Template): TemplatePage =>
+  templatePages[template] ?? defaultTemplatePage;
 
 export {
-	AzurillPage,
-	BronzorPage,
-	ChikoritaPage,
-	DitgarPage,
-	DittoPage,
-	GengarPage,
-	GlaliePage,
-	KakunaPage,
-	LaprasPage,
-	LeafishPage,
-	MeowthPage,
-	OnyxPage,
-	PikachuPage,
-	RhyhornPage,
-	ScizorPage,
+  AzurillPage,
+  BronzorPage,
+  ChikoritaPage,
+  DitgarPage,
+  DittoPage,
+  GengarPage,
+  GlaliePage,
+  KakunaPage,
+  LaprasPage,
+  LeafishPage,
+  MeowthPage,
+  OnyxPage,
+  PikachuPage,
+  RhyhornPage,
+  ScizorPage,
 };

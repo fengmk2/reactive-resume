@@ -3,13 +3,13 @@ import { renderDialog } from "./renderers";
 import { useDialogStore } from "./store";
 
 export function DialogManager() {
-	const { open, activeDialog, onOpenChange } = useDialogStore();
+  const { open, activeDialog, onOpenChange } = useDialogStore();
 
-	const DialogContent = renderDialog(activeDialog);
+  const DialogContent = renderDialog(activeDialog);
 
-	return (
-		<Dialog open={open} onOpenChange={onOpenChange}>
-			{DialogContent}
-		</Dialog>
-	);
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      {DialogContent}
+    </Dialog>
+  );
 }

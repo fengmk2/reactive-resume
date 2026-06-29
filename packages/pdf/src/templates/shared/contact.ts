@@ -1,20 +1,20 @@
 type WebsiteDisplay = {
-	url: string;
-	label?: string | undefined;
+  url: string;
+  label?: string | undefined;
 };
 
 type CustomFieldLink = {
-	link?: string | undefined;
+  link?: string | undefined;
 };
 
 export const getWebsiteDisplayText = (website: WebsiteDisplay): string => {
-	const label = website.label?.trim();
+  const label = website.label?.trim();
 
-	return label || website.url;
+  return label || website.url;
 };
 
 export const getCustomFieldLinkUrl = (field: CustomFieldLink): string | undefined => {
-	const link = field.link?.trim();
+  const link = field.link?.trim();
 
-	return link || undefined;
+  return link || undefined;
 };

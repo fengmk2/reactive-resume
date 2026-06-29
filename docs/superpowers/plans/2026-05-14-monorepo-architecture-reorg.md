@@ -27,6 +27,7 @@
 ## Task 0: Coordination Artifacts
 
 **Files:**
+
 - Modify: `docs/superpowers/plans/2026-05-14-monorepo-architecture-reorg.md`
 - Modify: `docs/superpowers/handoffs/2026-05-14-monorepo-architecture-reorg.md`
 - Modify: `docs/superpowers/worklogs/2026-05-14-monorepo-architecture-reorg.md`
@@ -40,6 +41,7 @@
 **Goal:** Create `@reactive-resume/resume` for pure resume-domain behavior, keeping `@reactive-resume/schema` validation-only and `@reactive-resume/utils` generic.
 
 **Files:**
+
 - Create: `packages/resume/package.json`
 - Create: `packages/resume/tsconfig.json`
 - Create: `packages/resume/vitest.config.ts`
@@ -66,6 +68,7 @@
 **Goal:** Create `@reactive-resume/docx` as the dedicated DOCX export package.
 
 **Files:**
+
 - Create: `packages/docx/package.json`
 - Create: `packages/docx/tsconfig.json`
 - Create: `packages/docx/vitest.config.ts`
@@ -86,6 +89,7 @@
 **Goal:** Keep `@reactive-resume/pdf` focused on document/template/font rendering and pure generation adapters. Do not move PDF.js viewer UI into the PDF package.
 
 **Files:**
+
 - Create: `packages/pdf/src/browser.tsx`
 - Create: `packages/pdf/src/server.tsx`
 - Modify: `packages/pdf/package.json`
@@ -106,6 +110,7 @@
 **Goal:** Extract MCP implementation from web route helpers into `@reactive-resume/mcp`; share model-facing tool contracts from `@reactive-resume/ai`.
 
 **Files:**
+
 - Create: `packages/mcp/package.json`
 - Create: `packages/mcp/tsconfig.json`
 - Create: `packages/mcp/vitest.config.ts`
@@ -131,6 +136,7 @@
 **Goal:** Move `packages/api/src` from technical layers into feature/capability modules with explicit public exports.
 
 **Files:**
+
 - Reorganize under `packages/api/src/features/*`
 - Modify: `packages/api/src/routers/index.ts`
 - Modify: `packages/api/package.json`
@@ -153,6 +159,7 @@
 **Goal:** Make `apps/server` read as a runtime adapter app.
 
 **Files:**
+
 - Reorganize `apps/server/src` into `http`, `rpc`, `mcp`, `openapi`, `static`, `startup`
 - Modify: `apps/server/src/index.ts`
 - Modify: `apps/server/package.json` if imports/dependencies change
@@ -169,6 +176,7 @@
 **Goal:** Move web code into domain/workflow feature trees so routes become thin shells.
 
 **Files:**
+
 - Create/reorganize under `apps/web/src/features/resume/*`
 - Create/reorganize under `apps/web/src/features/{command-palette,theme,locale,user,auth,settings,dialogs}/*`
 - Modify route imports and tests
@@ -210,6 +218,7 @@ Slice 2 notes:
 **Goal:** Keep one central dialog runtime but make domain modules own their dialog definitions/renderers.
 
 **Files:**
+
 - Modify/create under `apps/web/src/features/dialogs`
 - Modify/create domain dialog registry modules under relevant features
 - Modify root dialog manager import
@@ -226,6 +235,7 @@ Slice 2 notes:
 **Goal:** Make architectural rules executable.
 
 **Files:**
+
 - Modify: `turbo.json`
 - Modify: `biome.json`
 - Create: `tooling/grit/no-cross-workspace-src-imports.grit`
@@ -243,6 +253,7 @@ Slice 2 notes:
 **Goal:** Document the final architecture without duplicating rules in multiple places.
 
 **Files:**
+
 - Modify: `AGENTS.md`
 - Create: `docs/adr/0001-workspace-boundaries.md`
 - Modify: `docs/contributing/architecture.mdx`
@@ -261,6 +272,7 @@ Slice 2 notes:
 **Goal:** Finish with a validated branch and external-agent-ready handoff.
 
 **Files:**
+
 - Modify: `docs/superpowers/handoffs/2026-05-14-monorepo-architecture-reorg.md`
 - Modify: `docs/superpowers/worklogs/2026-05-14-monorepo-architecture-reorg.md`
 

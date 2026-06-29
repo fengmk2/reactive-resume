@@ -10,27 +10,27 @@ import { getTheme } from "./libs/theme";
 import { routeTree } from "./routeTree.gen";
 
 export const getRouter = async () => {
-	const queryClient = getQueryClient();
+  const queryClient = getQueryClient();
 
-	const [theme, locale, session, flags] = await Promise.all([
-		getTheme(),
-		getLocale(),
-		getSession(),
-		client.flags.get(),
-	]);
+  const [theme, locale, session, flags] = await Promise.all([
+    getTheme(),
+    getLocale(),
+    getSession(),
+    client.flags.get(),
+  ]);
 
-	await loadLocale(locale);
+  await loadLocale(locale);
 
-	const router = createRouter({
-		routeTree,
-		scrollRestoration: true,
-		defaultViewTransition: true,
-		defaultStructuralSharing: true,
-		defaultErrorComponent: ErrorScreen,
-		defaultPendingComponent: LoadingScreen,
-		defaultNotFoundComponent: NotFoundScreen,
-		context: { orpc, queryClient, theme, locale, session, flags },
-	});
+  const router = createRouter({
+    routeTree,
+    scrollRestoration: true,
+    defaultViewTransition: true,
+    defaultStructuralSharing: true,
+    defaultErrorComponent: ErrorScreen,
+    defaultPendingComponent: LoadingScreen,
+    defaultNotFoundComponent: NotFoundScreen,
+    context: { orpc, queryClient, theme, locale, session, flags },
+  });
 
-	return router;
+  return router;
 };

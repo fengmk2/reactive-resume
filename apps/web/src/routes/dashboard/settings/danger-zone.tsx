@@ -6,17 +6,17 @@ import { DangerZoneSettingsPage } from "@/features/settings/pages/danger-zone";
 import { DashboardHeader } from "../-components/header";
 
 export const Route = createFileRoute("/dashboard/settings/danger-zone")({
-	component: RouteComponent,
+  component: RouteComponent,
 });
 
 function RouteComponent() {
-	return (
-		<div className="space-y-4">
-			<DashboardHeader icon={WarningIcon} title={t`Danger Zone`} />
+  return (
+    <div className="space-y-4">
+      <DashboardHeader icon={WarningIcon} title={t`Danger Zone`} />
 
-			<Separator />
+      <Separator />
 
-			<DangerZoneSettingsPage />
-		</div>
-	);
+      <DangerZoneSettingsPage />
+    </div>
+  );
 }

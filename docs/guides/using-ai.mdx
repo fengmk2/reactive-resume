@@ -21,6 +21,7 @@ Reactive Resume uses AI providers for features such as resume analysis, AI-assis
         alt="Integrations settings showing AI provider configuration"
       />
     </Frame>
+
   </Step>
 </Steps>
 
@@ -28,13 +29,13 @@ Reactive Resume uses AI providers for features such as resume analysis, AI-assis
 
 In the **AI Providers** section, fill out the **Add Provider** form.
 
-| Field | Description |
-| --- | --- |
-| **Label** | A name that helps you recognize the provider, such as `Work OpenAI` or `Personal OpenRouter`. |
+| Field        | Description                                                                                                                      |
+| ------------ | -------------------------------------------------------------------------------------------------------------------------------- |
+| **Label**    | A name that helps you recognize the provider, such as `Work OpenAI` or `Personal OpenRouter`.                                    |
 | **Provider** | The provider type, such as OpenAI, Anthropic Claude, Google Gemini, Vercel AI Gateway, OpenRouter, Ollama, or OpenAI-compatible. |
-| **Model** | The exact model name expected by that provider. |
-| **Base URL** | The provider endpoint. Leave the default unless you use a gateway, proxy, local provider, or OpenAI-compatible endpoint. |
-| **API Key** | The key Reactive Resume should use when sending AI requests to that provider. |
+| **Model**    | The exact model name expected by that provider.                                                                                  |
+| **Base URL** | The provider endpoint. Leave the default unless you use a gateway, proxy, local provider, or OpenAI-compatible endpoint.         |
+| **API Key**  | The key Reactive Resume should use when sending AI requests to that provider.                                                    |
 
 Click **Save Provider** when the form is complete.
 
@@ -46,7 +47,8 @@ Click **Save Provider** when the form is complete.
 </Frame>
 
 <Warning>
-  Treat API keys like passwords. Anyone with a key can use the connected provider account and may incur costs.
+  Treat API keys like passwords. Anyone with a key can use the connected provider account and may
+  incur costs.
 </Warning>
 
 ## Test and enable a provider
@@ -58,18 +60,17 @@ After saving a provider, test it before using it.
     Reactive Resume sends a small request to verify the provider, model, base URL, and key.
   </Step>
 
-  <Step title="Review the status">
-    A successful provider is marked **Tested**. A failed provider is marked **Failed** and may show an error message.
-  </Step>
+<Step title="Review the status">
+  A successful provider is marked **Tested**. A failed provider is marked **Failed** and may show an
+  error message.
+</Step>
 
   <Step title="Enable the provider">
     Turn on **Use** for the tested provider you want Reactive Resume to use.
   </Step>
 </Steps>
 
-<Info>
-  Only tested providers can be used for AI-assisted features.
-</Info>
+<Info>Only tested providers can be used for AI-assisted features.</Info>
 
 ## How credentials are stored
 
@@ -78,8 +79,9 @@ AI provider credentials are encrypted on the server and are never shown again af
 If provider management is unavailable, your self-hosted deployment may be missing required server configuration.
 
 <Warning>
-  AI provider management requires the server-side services used to encrypt credentials. If the page says provider
-  management is unavailable, check your deployment configuration before using AI features.
+  AI provider management requires the server-side services used to encrypt credentials. If the page
+  says provider management is unavailable, check your deployment configuration before using AI
+  features.
 </Warning>
 
 ## Where AI is used

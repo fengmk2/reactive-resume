@@ -1,5 +1,5 @@
 type KeyedField<TKey extends string> = {
-	key: TKey;
+  key: TKey;
 };
 
 type KeyValueMap<TKey extends string> = Partial<Record<TKey, string | null | undefined>>;
@@ -16,13 +16,13 @@ type KeyValueMap<TKey extends string> = Partial<Record<TKey, string | null | und
  * @returns An array of fields whose corresponding values[key] is a non-empty string
  */
 export function filterFieldValues<TKey extends string, TField extends KeyedField<TKey>>(
-	values: KeyValueMap<TKey>,
-	...fields: TField[]
+  values: KeyValueMap<TKey>,
+  ...fields: TField[]
 ) {
-	const filteredFields = fields.filter((field) => Boolean(values[field.key]?.trim()));
-	return new Map(filteredFields.map((field) => [field.key, field] as const));
+  const filteredFields = fields.filter((field) => Boolean(values[field.key]?.trim()));
+  return new Map(filteredFields.map((field) => [field.key, field] as const));
 }
 
 export function unique<T>(items: T[]) {
-	return items.filter((item, index) => items.indexOf(item) === index);
+  return items.filter((item, index) => items.indexOf(item) === index);
 }

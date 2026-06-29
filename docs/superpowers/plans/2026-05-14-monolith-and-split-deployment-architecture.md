@@ -167,6 +167,7 @@ In Docker monolith mode, Node serves the SPA fallback. In split modes, the stati
 ## Task 1: Document The Deployment Contract First
 
 **Files:**
+
 - Create: `docs/deployment/architecture.mdx`
 - Create: `docs/deployment/split-vps.mdx`
 - Create: `docs/deployment/edge-frontend-node-backend.mdx`
@@ -341,6 +342,7 @@ git commit -m "docs: define monolith and split deployment contract"
 ## Task 2: Create Route Ownership Primitives
 
 **Files:**
+
 - Create: `packages/server/package.json`
 - Create: `packages/server/tsconfig.json`
 - Create: `packages/server/vitest.config.ts`
@@ -356,28 +358,31 @@ import { describe, expect, it } from "vitest";
 import { getRouteOwner } from "./ownership";
 
 describe("getRouteOwner", () => {
-	it.each([
-		["/api/rpc", "backend"],
-		["/api/auth/oauth", "backend"],
-		["/mcp", "backend"],
-		["/mcp/tools", "backend"],
-		["/.well-known/oauth-protected-resource", "backend"],
-		["/uploads/avatar.png", "backend"],
-		["/schema.json", "static"],
-		["/assets/app.js", "static"],
-		["/templates/jpg/azurill.jpg", "static"],
-		["/auth/login", "spa"],
-		["/dashboard", "spa"],
-		["/builder/abc", "spa"],
-		["/agent/thread", "spa"],
-		["/amruth/resume", "spa"],
-	])("classifies %s as %s", (pathname, owner) => {
-		expect(getRouteOwner(pathname)).toBe(owner);
-	});
+  it.each([
+    ["/api/rpc", "backend"],
+    ["/api/auth/oauth", "backend"],
+    ["/mcp", "backend"],
+    ["/mcp/tools", "backend"],
+    ["/.well-known/oauth-protected-resource", "backend"],
+    ["/uploads/avatar.png", "backend"],
+    ["/schema.json", "static"],
+    ["/assets/app.js", "static"],
+    ["/templates/jpg/azurill.jpg", "static"],
+    ["/auth/login", "spa"],
+    ["/dashboard", "spa"],
+    ["/builder/abc", "spa"],
+    ["/agent/thread", "spa"],
+    ["/amruth/resume", "spa"],
+  ])("classifies %s as %s", (pathname, owner) => {
+    expect(getRouteOwner(pathname)).toBe(owner);
+  });
 
-	it.each(["/missing.js", "/unknown.css", "/image.png"])("classifies file-looking misses as static", (pathname) => {
-		expect(getRouteOwner(pathname)).toBe("static");
-	});
+  it.each(["/missing.js", "/unknown.css", "/image.png"])(
+    "classifies file-looking misses as static",
+    (pathname) => {
+      expect(getRouteOwner(pathname)).toBe("static");
+    },
+  );
 });
 ```
 
@@ -387,22 +392,22 @@ Create `packages/server/package.json`:
 
 ```json
 {
-	"name": "@reactive-resume/server",
-	"version": "0.0.0",
-	"type": "module",
-	"private": true,
-	"exports": {
-		"./routes/ownership": "./src/routes/ownership.ts"
-	},
-	"scripts": {
-		"typecheck": "tsgo --noEmit",
-		"test": "vitest run --passWithNoTests"
-	},
-	"devDependencies": {
-		"@reactive-resume/config": "workspace:*",
-		"@typescript/native-preview": "7.0.0-dev.20260514.1",
-		"typescript": "^6.0.3"
-	}
+  "name": "@reactive-resume/server",
+  "version": "0.0.0",
+  "type": "module",
+  "private": true,
+  "exports": {
+    "./routes/ownership": "./src/routes/ownership.ts"
+  },
+  "scripts": {
+    "typecheck": "tsgo --noEmit",
+    "test": "vitest run --passWithNoTests"
+  },
+  "devDependencies": {
+    "@reactive-resume/config": "workspace:*",
+    "@typescript/native-preview": "7.0.0-dev.20260514.1",
+    "typescript": "^6.0.3"
+  }
 }
 ```
 
@@ -410,7 +415,7 @@ Create `packages/server/tsconfig.json`:
 
 ```json
 {
-	"extends": "@reactive-resume/config/tsconfig.base.json"
+  "extends": "@reactive-resume/config/tsconfig.base.json"
 }
 ```
 
@@ -420,7 +425,7 @@ Create `packages/server/vitest.config.ts`:
 import { createVitestProjectConfig } from "@reactive-resume/config/vitest";
 
 export default createVitestProjectConfig({
-	name: "@reactive-resume/server",
+  name: "@reactive-resume/server",
 });
 ```
 
@@ -442,46 +447,46 @@ export type RouteOwner = "backend" | "static" | "spa";
 const backendExactRoutes = new Set(["/mcp"]);
 const backendPrefixes = ["/api/", "/mcp/", "/.well-known/", "/uploads/"];
 const staticExactRoutes = new Set([
-	"/schema.json",
-	"/favicon.ico",
-	"/favicon.svg",
-	"/manifest.webmanifest",
-	"/robots.txt",
-	"/sitemap.xml",
+  "/schema.json",
+  "/favicon.ico",
+  "/favicon.svg",
+  "/manifest.webmanifest",
+  "/robots.txt",
+  "/sitemap.xml",
 ]);
 const staticPrefixes = [
-	"/assets/",
-	"/templates/",
-	"/fonts/",
-	"/icon/",
-	"/logo/",
-	"/opengraph/",
-	"/photos/",
-	"/sounds/",
-	"/videos/",
+  "/assets/",
+  "/templates/",
+  "/fonts/",
+  "/icon/",
+  "/logo/",
+  "/opengraph/",
+  "/photos/",
+  "/sounds/",
+  "/videos/",
 ];
 
 function looksLikeFile(pathname: string) {
-	const lastSegment = pathname.split("/").pop() ?? "";
-	return lastSegment.includes(".");
+  const lastSegment = pathname.split("/").pop() ?? "";
+  return lastSegment.includes(".");
 }
 
 export function getRouteOwner(pathname: string): RouteOwner {
-	if (backendExactRoutes.has(pathname)) return "backend";
-	if (backendPrefixes.some((prefix) => pathname.startsWith(prefix))) return "backend";
-	if (staticExactRoutes.has(pathname)) return "static";
-	if (staticPrefixes.some((prefix) => pathname.startsWith(prefix))) return "static";
-	if (/^\/pwa-\d+x\d+\.png$/.test(pathname)) return "static";
-	if (looksLikeFile(pathname)) return "static";
-	return "spa";
+  if (backendExactRoutes.has(pathname)) return "backend";
+  if (backendPrefixes.some((prefix) => pathname.startsWith(prefix))) return "backend";
+  if (staticExactRoutes.has(pathname)) return "static";
+  if (staticPrefixes.some((prefix) => pathname.startsWith(prefix))) return "static";
+  if (/^\/pwa-\d+x\d+\.png$/.test(pathname)) return "static";
+  if (looksLikeFile(pathname)) return "static";
+  return "spa";
 }
 
 export function isBackendRoute(pathname: string) {
-	return getRouteOwner(pathname) === "backend";
+  return getRouteOwner(pathname) === "backend";
 }
 
 export function isStaticRoute(pathname: string) {
-	return getRouteOwner(pathname) === "static";
+  return getRouteOwner(pathname) === "static";
 }
 ```
 
@@ -506,6 +511,7 @@ git commit -m "feat(server): add route ownership contract"
 ## Task 3: Move Custom OAuth Bridge To `/api/auth/oauth`
 
 **Files:**
+
 - Modify: `apps/server/src/handlers/auth.test.ts`
 - Create: `apps/server/src/index.test.ts`
 - Modify: `apps/server/src/index.ts`
@@ -519,9 +525,9 @@ In `apps/server/src/handlers/auth.test.ts`, change the request URL and expected 
 
 ```ts
 const response = await handleOAuth(
-	new Request(
-		"http://localhost:3001/api/auth/oauth?client_id=test-client&redirect_uri=https%3A%2F%2Fexample.com%2Fcallback&state=abc&exp=123&sig=456",
-	),
+  new Request(
+    "http://localhost:3001/api/auth/oauth?client_id=test-client&redirect_uri=https%3A%2F%2Fexample.com%2Fcallback&state=abc&exp=123&sig=456",
+  ),
 );
 
 expect(callbackUrl.pathname).toBe("/api/auth/oauth");
@@ -535,53 +541,55 @@ Create `apps/server/src/index.test.ts`:
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const mocks = vi.hoisted(() => ({
-	handleAuth: vi.fn(),
-	handleOAuth: vi.fn(),
+  handleAuth: vi.fn(),
+  handleOAuth: vi.fn(),
 }));
 
 vi.mock("./handlers/auth", () => ({
-	handleAuth: mocks.handleAuth,
-	handleOAuth: mocks.handleOAuth,
+  handleAuth: mocks.handleAuth,
+  handleOAuth: mocks.handleOAuth,
 }));
 
 vi.mock("./handlers/health", () => ({ handleHealth: () => Response.json({ ok: true }) }));
 vi.mock("./handlers/mcp", () => ({ handleMcp: () => new Response("mcp") }));
 vi.mock("./handlers/metadata", () => ({
-	handleMcpServerCard: () => Response.json({}),
-	handleOAuthAuthorizationServer: () => Response.json({}),
-	handleOAuthProtectedResource: () => Response.json({}),
-	handleOpenIdConfiguration: () => Response.json({}),
-	handleWellKnownFallback: () => new Response("OK"),
+  handleMcpServerCard: () => Response.json({}),
+  handleOAuthAuthorizationServer: () => Response.json({}),
+  handleOAuthProtectedResource: () => Response.json({}),
+  handleOpenIdConfiguration: () => Response.json({}),
+  handleWellKnownFallback: () => new Response("OK"),
 }));
 vi.mock("./handlers/openapi", () => ({ handleOpenApi: () => Response.json({}) }));
 vi.mock("./handlers/rpc", () => ({ handleRpc: () => Response.json({}) }));
 vi.mock("./handlers/uploads", () => ({ handleUpload: () => new Response("upload") }));
 
 describe("createApp route ownership", () => {
-	beforeEach(() => {
-		mocks.handleAuth.mockReset();
-		mocks.handleOAuth.mockReset();
-		mocks.handleAuth.mockResolvedValue(Response.json({ route: "auth" }));
-		mocks.handleOAuth.mockResolvedValue(Response.json({ route: "oauth" }));
-	});
+  beforeEach(() => {
+    mocks.handleAuth.mockReset();
+    mocks.handleOAuth.mockReset();
+    mocks.handleAuth.mockResolvedValue(Response.json({ route: "auth" }));
+    mocks.handleOAuth.mockResolvedValue(Response.json({ route: "oauth" }));
+  });
 
-	it("routes /api/auth/oauth to the custom OAuth bridge before the Better Auth catch-all", async () => {
-		const { createApp } = await import("./index");
-		const response = await createApp().request("http://localhost:3001/api/auth/oauth?client_id=test");
+  it("routes /api/auth/oauth to the custom OAuth bridge before the Better Auth catch-all", async () => {
+    const { createApp } = await import("./index");
+    const response = await createApp().request(
+      "http://localhost:3001/api/auth/oauth?client_id=test",
+    );
 
-		await expect(response.json()).resolves.toEqual({ route: "oauth" });
-		expect(mocks.handleOAuth).toHaveBeenCalledTimes(1);
-		expect(mocks.handleAuth).not.toHaveBeenCalled();
-	});
+    await expect(response.json()).resolves.toEqual({ route: "oauth" });
+    expect(mocks.handleOAuth).toHaveBeenCalledTimes(1);
+    expect(mocks.handleAuth).not.toHaveBeenCalled();
+  });
 
-	it("keeps other /api/auth/* requests on the Better Auth handler", async () => {
-		const { createApp } = await import("./index");
-		const response = await createApp().request("http://localhost:3001/api/auth/session");
+  it("keeps other /api/auth/* requests on the Better Auth handler", async () => {
+    const { createApp } = await import("./index");
+    const response = await createApp().request("http://localhost:3001/api/auth/session");
 
-		await expect(response.json()).resolves.toEqual({ route: "auth" });
-		expect(mocks.handleAuth).toHaveBeenCalledTimes(1);
-		expect(mocks.handleOAuth).not.toHaveBeenCalled();
-	});
+    await expect(response.json()).resolves.toEqual({ route: "auth" });
+    expect(mocks.handleAuth).toHaveBeenCalledTimes(1);
+    expect(mocks.handleOAuth).not.toHaveBeenCalled();
+  });
 });
 ```
 
@@ -656,6 +664,7 @@ git commit -m "fix(auth): move OAuth bridge under api auth routes"
 ## Task 4: Make `/schema.json` Static
 
 **Files:**
+
 - Create: `packages/scripts/schema/generate.ts`
 - Create: `packages/scripts/schema/generate.test.ts`
 - Modify: `packages/scripts/package.json`
@@ -677,20 +686,20 @@ import { describe, expect, it } from "vitest";
 import { generateResumeSchemaJson } from "./generate";
 
 describe("generateResumeSchemaJson", () => {
-	it("writes identical resume JSON Schema to every target", async () => {
-		const directory = await fs.mkdtemp(path.join(os.tmpdir(), "resume-schema-"));
-		const firstTarget = path.join(directory, "schema-a.json");
-		const secondTarget = path.join(directory, "nested", "schema-b.json");
+  it("writes identical resume JSON Schema to every target", async () => {
+    const directory = await fs.mkdtemp(path.join(os.tmpdir(), "resume-schema-"));
+    const firstTarget = path.join(directory, "schema-a.json");
+    const secondTarget = path.join(directory, "nested", "schema-b.json");
 
-		await generateResumeSchemaJson([firstTarget, secondTarget]);
+    await generateResumeSchemaJson([firstTarget, secondTarget]);
 
-		const first = await fs.readFile(firstTarget, "utf-8");
-		const second = await fs.readFile(secondTarget, "utf-8");
+    const first = await fs.readFile(firstTarget, "utf-8");
+    const second = await fs.readFile(secondTarget, "utf-8");
 
-		expect(JSON.parse(first)).toEqual(JSON.parse(second));
-		expect(JSON.parse(first)).toHaveProperty("properties.basics");
-		expect(first.endsWith("\n")).toBe(true);
-	});
+    expect(JSON.parse(first)).toEqual(JSON.parse(second));
+    expect(JSON.parse(first)).toHaveProperty("properties.basics");
+    expect(first.endsWith("\n")).toBe(true);
+  });
 });
 ```
 
@@ -731,29 +740,29 @@ import z from "zod";
 import { resumeDataSchema } from "@reactive-resume/schema/resume/data";
 
 const defaultTargets = [
-	new URL("../../schema/schema.json", import.meta.url),
-	new URL("../../../apps/web/public/schema.json", import.meta.url),
+  new URL("../../schema/schema.json", import.meta.url),
+  new URL("../../../apps/web/public/schema.json", import.meta.url),
 ];
 
 function toPath(target: string | URL) {
-	return target instanceof URL ? fileURLToPath(target) : target;
+  return target instanceof URL ? fileURLToPath(target) : target;
 }
 
 export async function generateResumeSchemaJson(targets: Array<string | URL> = defaultTargets) {
-	const schema = z.toJSONSchema(resumeDataSchema);
-	const contents = `${JSON.stringify(schema, null, "\t")}\n`;
+  const schema = z.toJSONSchema(resumeDataSchema);
+  const contents = `${JSON.stringify(schema, null, "\t")}\n`;
 
-	await Promise.all(
-		targets.map(async (target) => {
-			const targetPath = toPath(target);
-			await fs.mkdir(path.dirname(targetPath), { recursive: true });
-			await fs.writeFile(targetPath, contents);
-		}),
-	);
+  await Promise.all(
+    targets.map(async (target) => {
+      const targetPath = toPath(target);
+      await fs.mkdir(path.dirname(targetPath), { recursive: true });
+      await fs.writeFile(targetPath, contents);
+    }),
+  );
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
-	await generateResumeSchemaJson();
+  await generateResumeSchemaJson();
 }
 ```
 
@@ -818,6 +827,7 @@ git commit -m "feat(web): serve resume schema as static asset"
 ## Task 5: Split Server App Composition Into Backend-Only And Monolith
 
 **Files:**
+
 - Create: `apps/server/src/app.ts`
 - Create: `apps/server/src/app.test.ts`
 - Modify: `apps/server/src/index.ts`
@@ -831,37 +841,37 @@ Create `apps/server/src/app.test.ts`:
 import { describe, expect, it, vi } from "vitest";
 
 vi.mock("./handlers/auth", () => ({
-	handleAuth: () => Response.json({ route: "auth" }),
-	handleOAuth: () => Response.json({ route: "oauth" }),
+  handleAuth: () => Response.json({ route: "auth" }),
+  handleOAuth: () => Response.json({ route: "oauth" }),
 }));
 vi.mock("./handlers/health", () => ({ handleHealth: () => Response.json({ ok: true }) }));
 vi.mock("./handlers/mcp", () => ({ handleMcp: () => new Response("mcp") }));
 vi.mock("./handlers/metadata", () => ({
-	handleMcpServerCard: () => Response.json({}),
-	handleOAuthAuthorizationServer: () => Response.json({}),
-	handleOAuthProtectedResource: () => Response.json({}),
-	handleOpenIdConfiguration: () => Response.json({}),
-	handleWellKnownFallback: () => new Response("OK"),
+  handleMcpServerCard: () => Response.json({}),
+  handleOAuthAuthorizationServer: () => Response.json({}),
+  handleOAuthProtectedResource: () => Response.json({}),
+  handleOpenIdConfiguration: () => Response.json({}),
+  handleWellKnownFallback: () => new Response("OK"),
 }));
 vi.mock("./handlers/openapi", () => ({ handleOpenApi: () => Response.json({}) }));
 vi.mock("./handlers/rpc", () => ({ handleRpc: () => Response.json({}) }));
 vi.mock("./handlers/uploads", () => ({ handleUpload: () => new Response("upload") }));
 
 describe("server app deployment modes", () => {
-	it("returns 404 for frontend routes in backend-only mode", async () => {
-		const { createBackendApp } = await import("./app");
-		const response = await createBackendApp().request("http://localhost:3001/dashboard");
+  it("returns 404 for frontend routes in backend-only mode", async () => {
+    const { createBackendApp } = await import("./app");
+    const response = await createBackendApp().request("http://localhost:3001/dashboard");
 
-		expect(response.status).toBe(404);
-	});
+    expect(response.status).toBe(404);
+  });
 
-	it("keeps backend routes available in backend-only mode", async () => {
-		const { createBackendApp } = await import("./app");
-		const response = await createBackendApp().request("http://localhost:3001/api/auth/oauth");
+  it("keeps backend routes available in backend-only mode", async () => {
+    const { createBackendApp } = await import("./app");
+    const response = await createBackendApp().request("http://localhost:3001/api/auth/oauth");
 
-		expect(response.status).toBe(200);
-		await expect(response.json()).resolves.toEqual({ route: "oauth" });
-	});
+    expect(response.status).toBe(200);
+    await expect(response.json()).resolves.toEqual({ route: "oauth" });
+  });
 });
 ```
 
@@ -886,11 +896,11 @@ import { handleAuth, handleOAuth } from "./handlers/auth";
 import { handleHealth } from "./handlers/health";
 import { handleMcp } from "./handlers/mcp";
 import {
-	handleMcpServerCard,
-	handleOAuthAuthorizationServer,
-	handleOAuthProtectedResource,
-	handleOpenIdConfiguration,
-	handleWellKnownFallback,
+  handleMcpServerCard,
+  handleOAuthAuthorizationServer,
+  handleOAuthProtectedResource,
+  handleOpenIdConfiguration,
+  handleWellKnownFallback,
 } from "./handlers/metadata";
 import { handleOpenApi } from "./handlers/openapi";
 import { handleRpc } from "./handlers/rpc";
@@ -900,54 +910,58 @@ const staticRoot = fileURLToPath(new URL("../../web/dist", import.meta.url));
 const indexHtmlPath = fileURLToPath(new URL("../../web/dist/index.html", import.meta.url));
 
 function registerBackendRoutes(app: Hono) {
-	app.all("/api/rpc", (c) => handleRpc(c.req.raw));
-	app.all("/api/rpc/*", (c) => handleRpc(c.req.raw));
-	app.all("/api/openapi", (c) => handleOpenApi(c.req.raw));
-	app.all("/api/openapi/*", (c) => handleOpenApi(c.req.raw));
-	app.get("/api/auth/oauth", (c) => handleOAuth(c.req.raw));
-	app.on(["GET", "POST"], "/api/auth/*", (c) => handleAuth(c.req.raw));
-	app.get("/api/health", () => handleHealth());
-	app.get("/api/uploads/*", (c) => handleUpload(c.req.raw));
-	app.get("/uploads/*", (c) => handleUpload(c.req.raw));
-	app.all("/mcp", (c) => handleMcp(c.req.raw));
-	app.all("/mcp/*", (c) => handleMcp(c.req.raw));
-	app.get("/.well-known/mcp/server-card.json", () => handleMcpServerCard());
-	app.get("/.well-known/oauth-authorization-server", (c) => handleOAuthAuthorizationServer(c.req.raw));
-	app.get("/.well-known/oauth-authorization-server/*", (c) => handleOAuthAuthorizationServer(c.req.raw));
-	app.get("/.well-known/openid-configuration", (c) => handleOpenIdConfiguration(c.req.raw));
-	app.get("/.well-known/oauth-protected-resource", () => handleOAuthProtectedResource());
-	app.get("/.well-known/oauth-protected-resource/*", () => handleOAuthProtectedResource());
-	app.get("/.well-known/*", () => handleWellKnownFallback());
-	app.on(["HEAD"], "/.well-known/*", () => handleWellKnownFallback());
+  app.all("/api/rpc", (c) => handleRpc(c.req.raw));
+  app.all("/api/rpc/*", (c) => handleRpc(c.req.raw));
+  app.all("/api/openapi", (c) => handleOpenApi(c.req.raw));
+  app.all("/api/openapi/*", (c) => handleOpenApi(c.req.raw));
+  app.get("/api/auth/oauth", (c) => handleOAuth(c.req.raw));
+  app.on(["GET", "POST"], "/api/auth/*", (c) => handleAuth(c.req.raw));
+  app.get("/api/health", () => handleHealth());
+  app.get("/api/uploads/*", (c) => handleUpload(c.req.raw));
+  app.get("/uploads/*", (c) => handleUpload(c.req.raw));
+  app.all("/mcp", (c) => handleMcp(c.req.raw));
+  app.all("/mcp/*", (c) => handleMcp(c.req.raw));
+  app.get("/.well-known/mcp/server-card.json", () => handleMcpServerCard());
+  app.get("/.well-known/oauth-authorization-server", (c) =>
+    handleOAuthAuthorizationServer(c.req.raw),
+  );
+  app.get("/.well-known/oauth-authorization-server/*", (c) =>
+    handleOAuthAuthorizationServer(c.req.raw),
+  );
+  app.get("/.well-known/openid-configuration", (c) => handleOpenIdConfiguration(c.req.raw));
+  app.get("/.well-known/oauth-protected-resource", () => handleOAuthProtectedResource());
+  app.get("/.well-known/oauth-protected-resource/*", () => handleOAuthProtectedResource());
+  app.get("/.well-known/*", () => handleWellKnownFallback());
+  app.on(["HEAD"], "/.well-known/*", () => handleWellKnownFallback());
 }
 
 export function createBackendApp() {
-	const app = new Hono();
-	registerBackendRoutes(app);
-	app.all("/*", () => new Response("Not Found", { status: 404 }));
-	return app;
+  const app = new Hono();
+  registerBackendRoutes(app);
+  app.all("/*", () => new Response("Not Found", { status: 404 }));
+  return app;
 }
 
 export function createMonolithApp() {
-	const app = new Hono();
-	registerBackendRoutes(app);
+  const app = new Hono();
+  registerBackendRoutes(app);
 
-	app.use("/*", serveStatic({ root: staticRoot, precompressed: true }));
-	app.get("/*", async (c) => {
-		const pathname = new URL(c.req.url).pathname;
-		if (pathname.split("/").pop()?.includes(".")) return c.text("Not Found", 404);
+  app.use("/*", serveStatic({ root: staticRoot, precompressed: true }));
+  app.get("/*", async (c) => {
+    const pathname = new URL(c.req.url).pathname;
+    if (pathname.split("/").pop()?.includes(".")) return c.text("Not Found", 404);
 
-		const html = await fs.readFile(indexHtmlPath, "utf-8");
-		return c.html(html);
-	});
-	app.on(["HEAD"], "/*", async (c) => {
-		const pathname = new URL(c.req.url).pathname;
-		if (pathname.split("/").pop()?.includes(".")) return c.body(null, 404);
+    const html = await fs.readFile(indexHtmlPath, "utf-8");
+    return c.html(html);
+  });
+  app.on(["HEAD"], "/*", async (c) => {
+    const pathname = new URL(c.req.url).pathname;
+    if (pathname.split("/").pop()?.includes(".")) return c.body(null, 404);
 
-		return c.body(null, 200, { "Content-Type": "text/html; charset=UTF-8" });
-	});
+    return c.body(null, 200, { "Content-Type": "text/html; charset=UTF-8" });
+  });
 
-	return app;
+  return app;
 }
 ```
 
@@ -963,29 +977,31 @@ import { createBackendApp, createMonolithApp } from "./app";
 import { runStartupChecks } from "./lib/startup";
 
 export function createApp() {
-	return process.env.SERVER_MODE === "backend-only" ? createBackendApp() : createMonolithApp();
+  return process.env.SERVER_MODE === "backend-only" ? createBackendApp() : createMonolithApp();
 }
 
 async function main() {
-	await runStartupChecks();
+  await runStartupChecks();
 
-	const port =
-		process.env.NODE_ENV === "production" ? Number.parseInt(process.env.PORT ?? "3000", 10) : env.SERVER_PORT;
-	const app = createApp();
+  const port =
+    process.env.NODE_ENV === "production"
+      ? Number.parseInt(process.env.PORT ?? "3000", 10)
+      : env.SERVER_PORT;
+  const app = createApp();
 
-	serve(
-		{
-			fetch: app.fetch,
-			port,
-		},
-		(info) => {
-			console.info(`🚀 Up and running on http://localhost:${info.port}`);
-		},
-	);
+  serve(
+    {
+      fetch: app.fetch,
+      port,
+    },
+    (info) => {
+      console.info(`🚀 Up and running on http://localhost:${info.port}`);
+    },
+  );
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
-	await main();
+  await main();
 }
 ```
 
@@ -1010,6 +1026,7 @@ git commit -m "feat(server): split backend and monolith app modes"
 ## Task 6: Preserve Docker Monolith Contract
 
 **Files:**
+
 - Modify: `Dockerfile`
 - Modify: `compose.yml`
 - Modify: `compose.dev.yml` only if needed
@@ -1108,6 +1125,7 @@ rg '"/auth/oauth"|/auth/oauth|handleSchemaJson|app\\.get\\("/schema\\.json"|SERV
 ```
 
 Expected:
+
 - No runtime `/auth/oauth` references remain.
 - No `handleSchemaJson` references remain.
 - `SERVER_MODE`, `backend-only`, and `monolith` appear only in app composition, Docker, and docs.

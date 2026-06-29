@@ -4,22 +4,22 @@ import { authDialogRendererRegistry } from "./auth/registry";
 import { resumeDialogRendererRegistry } from "./resume/registry";
 
 const dialogRendererRegistries = [
-	authDialogRendererRegistry,
-	apiKeyDialogRendererRegistry,
-	resumeDialogRendererRegistry,
+  authDialogRendererRegistry,
+  apiKeyDialogRendererRegistry,
+  resumeDialogRendererRegistry,
 ] as const;
 
 const dialogRendererByType = new Map(
-	dialogRendererRegistries.flatMap((registry) =>
-		registry.renderers.map((renderer) => [renderer.type, renderer] as const),
-	),
+  dialogRendererRegistries.flatMap((registry) =>
+    registry.renderers.map((renderer) => [renderer.type, renderer] as const),
+  ),
 );
 
 export const renderDialog = (dialog: DialogSchema | null) => {
-	if (!dialog) return null;
+  if (!dialog) return null;
 
-	const renderer = dialogRendererByType.get(dialog.type);
-	if (renderer) return renderer.render(dialog as never);
+  const renderer = dialogRendererByType.get(dialog.type);
+  if (renderer) return renderer.render(dialog as never);
 
-	return null;
+  return null;
 };

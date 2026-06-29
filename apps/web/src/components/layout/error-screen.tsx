@@ -6,22 +6,22 @@ import { BrandIcon } from "@reactive-resume/ui/components/brand-icon";
 import { Button } from "@reactive-resume/ui/components/button";
 
 export function ErrorScreen({ error, reset }: ErrorComponentProps) {
-	return (
-		<div className="mx-auto flex h-svh max-w-md flex-col items-center justify-center gap-y-4">
-			<BrandIcon variant="logo" className="size-12" />
+  return (
+    <div className="mx-auto flex h-svh max-w-md flex-col items-center justify-center gap-y-4">
+      <BrandIcon variant="logo" className="size-12" />
 
-			<Alert>
-				<WarningIcon />
-				<AlertTitle>
-					<Trans>An error occurred while loading the page.</Trans>
-				</AlertTitle>
-				<AlertDescription>{error.message}</AlertDescription>
-			</Alert>
+      <Alert>
+        <WarningIcon />
+        <AlertTitle>
+          <Trans>An error occurred while loading the page.</Trans>
+        </AlertTitle>
+        <AlertDescription>{error.message}</AlertDescription>
+      </Alert>
 
-			<Button onClick={reset}>
-				<ArrowClockwiseIcon />
-				<Trans>Refresh</Trans>
-			</Button>
-		</div>
-	);
+      <Button onClick={reset}>
+        <ArrowClockwiseIcon />
+        <Trans>Refresh</Trans>
+      </Button>
+    </div>
+  );
 }

@@ -1,4 +1,4 @@
 {
-	"extends": ["//"],
-	"tags": ["app:web"]
+  "extends": ["//"],
+  "tags": ["app:web"]
 }

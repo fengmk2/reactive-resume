@@ -8,12 +8,12 @@ import { statisticsRouter } from "../features/statistics/router";
 import { storageRouter } from "../features/storage/router";
 
 export default {
-	ai: aiRouter,
-	aiProviders: aiProvidersRouter,
-	agent: agentRouter,
-	auth: authRouter,
-	flags: flagsRouter,
-	resume: resumeRouter,
-	statistics: statisticsRouter,
-	storage: storageRouter,
+  ai: aiRouter,
+  aiProviders: aiProvidersRouter,
+  agent: agentRouter,
+  auth: authRouter,
+  flags: flagsRouter,
+  resume: resumeRouter,
+  statistics: statisticsRouter,
+  storage: storageRouter,
 };

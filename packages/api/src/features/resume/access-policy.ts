@@ -13,14 +13,14 @@ import { ORPCError } from "@orpc/client";
  */
 
 type Resume = {
-	userId: string;
-	isPublic: boolean;
+  userId: string;
+  isPublic: boolean;
 };
 
 type Viewer = { id: string } | null;
 
 export function isOwner(resume: Resume, viewer: Viewer): boolean {
-	return viewer !== null && viewer.id === resume.userId;
+  return viewer !== null && viewer.id === resume.userId;
 }
 
 /**
@@ -29,9 +29,9 @@ export function isOwner(resume: Resume, viewer: Viewer): boolean {
  * disclose existence of private resumes by id/slug.
  */
 export function assertCanView(resume: Resume, viewer: Viewer): void {
-	if (isOwner(resume, viewer)) return;
-	if (resume.isPublic) return;
-	throw new ORPCError("NOT_FOUND");
+  if (isOwner(resume, viewer)) return;
+  if (resume.isPublic) return;
+  throw new ORPCError("NOT_FOUND");
 }
 
 /**
@@ -49,22 +49,22 @@ export function assertCanView(resume: Resume, viewer: Viewer): void {
  * Owner views pass through untouched.
  */
 export function redactResumeForViewer<T extends { name: string; data: ResumeData }>(
-	resume: T,
-	viewerIsOwner: boolean,
+  resume: T,
+  viewerIsOwner: boolean,
 ): T {
-	if (viewerIsOwner) return resume;
+  if (viewerIsOwner) return resume;
 
-	return {
-		...resume,
-		name: "Resume",
-		data: {
-			...resume.data,
-			metadata: {
-				...resume.data.metadata,
-				notes: "",
-			},
-		},
-	};
+  return {
+    ...resume,
+    name: "Resume",
+    data: {
+      ...resume.data,
+      metadata: {
+        ...resume.data.metadata,
+        notes: "",
+      },
+    },
+  };
 }
 
 /**
@@ -74,5 +74,5 @@ export function redactResumeForViewer<T extends { name: string; data: ResumeData
  * `downloads` should gate on this helper.
  */
 export function shouldCountForStatistics(resume: Resume, viewer: Viewer): boolean {
-	return !isOwner(resume, viewer);
+  return !isOwner(resume, viewer);
 }

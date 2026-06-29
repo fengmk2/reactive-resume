@@ -23,7 +23,7 @@ The existing redirect URI policy remains centralized in `@reactive-resume/utils/
 Introduce a mode-based OAuth redirect validator API, for example:
 
 ```ts
-isAllowedOAuthRedirectUri(input, trustedOrigins, { allowUnsafe })
+isAllowedOAuthRedirectUri(input, trustedOrigins, { allowUnsafe });
 ```
 
 Safe mode keeps the current rules:

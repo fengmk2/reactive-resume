@@ -5,36 +5,36 @@ import { getDashboardSidebarState, setDashboardSidebarState } from "./-component
 import { DashboardSidebar } from "./-components/sidebar";
 
 export const Route = createFileRoute("/dashboard")({
-	component: RouteComponent,
-	beforeLoad: async ({ context }) => {
-		if (!context.session) throw redirect({ to: "/auth/login", replace: true });
-		return { session: context.session };
-	},
-	loader: async () => {
-		const sidebarState = getDashboardSidebarState();
-		return { sidebarState };
-	},
-	head: () => ({
-		meta: [createNoindexFollowMeta()],
-	}),
+  component: RouteComponent,
+  beforeLoad: async ({ context }) => {
+    if (!context.session) throw redirect({ to: "/auth/login", replace: true });
+    return { session: context.session };
+  },
+  loader: async () => {
+    const sidebarState = getDashboardSidebarState();
+    return { sidebarState };
+  },
+  head: () => ({
+    meta: [createNoindexFollowMeta()],
+  }),
 });
 
 function RouteComponent() {
-	const router = useRouter();
-	const { sidebarState } = Route.useLoaderData();
+  const router = useRouter();
+  const { sidebarState } = Route.useLoaderData();
 
-	const handleSidebarOpenChange = (open: boolean) => {
-		setDashboardSidebarState(open);
-		void router.invalidate();
-	};
+  const handleSidebarOpenChange = (open: boolean) => {
+    setDashboardSidebarState(open);
+    void router.invalidate();
+  };
 
-	return (
-		<SidebarProvider open={sidebarState} onOpenChange={handleSidebarOpenChange}>
-			<DashboardSidebar />
+  return (
+    <SidebarProvider open={sidebarState} onOpenChange={handleSidebarOpenChange}>
+      <DashboardSidebar />
 
-			<main className="@container flex-1 p-4 md:ps-2">
-				<Outlet />
-			</main>
-		</SidebarProvider>
-	);
+      <main className="@container flex-1 p-4 md:ps-2">
+        <Outlet />
+      </main>
+    </SidebarProvider>
+  );
 }
